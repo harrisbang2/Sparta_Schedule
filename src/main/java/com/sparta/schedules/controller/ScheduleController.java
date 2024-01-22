@@ -3,7 +3,7 @@ package com.sparta.schedules.controller;
 import com.sparta.schedules.DTO.ScheduleRequestDto;
 import com.sparta.schedules.DTO.ScheduleResponseDto;
 import com.sparta.schedules.entitiy.Schedule;
-import com.sparta.schedules.service.Service;
+import com.sparta.schedules.service.Services;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -19,8 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ScheduleController {
-    Service service ;
-    public ScheduleController(Service service) {
+    Services service ;
+    public ScheduleController(Services service) {
         this.service = service;
     }
 
@@ -31,17 +31,17 @@ public class ScheduleController {
 
     @GetMapping("/memos")
     public List<ScheduleResponseDto> getMemos() {
-        return service.getSchedules();
+        return service.getMemos();
     }
 
     @PutMapping("/memos/{id}")
     public Long updateMemo(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
-        return service.updateSchedule(id,requestDto);
+        return service.updateMemo(id,requestDto);
     }
 
     @DeleteMapping("/memos/{id}")
     public Long deleteMemo(@PathVariable Long id) {
-        return service.delete(id);
+        return service.deleteMemo(id);
     }
 
 }
