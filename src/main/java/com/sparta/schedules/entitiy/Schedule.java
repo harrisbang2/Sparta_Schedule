@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -19,14 +21,18 @@ public class Schedule {
     private String password;
     @Column(name = "contents", nullable = false)
     private String contents;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
 
     public Schedule(ScheduleRequestDto requestDto) {
         this.password = requestDto.getPassword();
         this.contents = requestDto.getContents();
+        this.date = requestDto.getDate();
     }
 
     public void update(ScheduleRequestDto requestDto) {
         this.password = requestDto.getPassword();
         this.contents = requestDto.getContents();
+        this.date = requestDto.getDate();
     }
 }

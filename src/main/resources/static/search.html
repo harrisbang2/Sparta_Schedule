@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Search Schedule</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        function SearchPost(){
+            $('#cards-box').empty();
+            let search = $('#search').val();
+            if (isValidContents(search) == false) {
+                return;
+            }
+            let the_url = "/api/schedule/search/"+search;
+            $.ajax({
+                type: "GET",
+                url: the_url,
+                contentType: "application/json",
+                data: JSON.stringify(search),
+                success: function (response) {
+                    alert('검색이 성공!');
+                    let id = response['id'];
+                    let password = response['password'];
+                    let contents = response['contents'];
+                    let date = response['date'];
+                    addHTML(id, password, contents, date);
+                }
+            });
+        }
+        //
+        function SearchByDate(){
+            $('#cards-box').empty();
+            let search = $('#searchbydate').val();
+            if (isValidContents(search) == false) {
+                return;
+            }
+            let the_url = "/api/schedule/search/date/"+search;
+            $.ajax({
+                type: "GET",
+                url: the_url,
+                contentType: "application/json",
+                data: JSON.stringify(search),
+                success: function (response) {
+                    alert('검색이 성공!');
+                    for (let i = 0; i < response.length; i++) {
+                        let message = response[i];
+                        let id = message['id'];
+                        let password = message['password'];
+                        let contents = message['contents'];
+                        let date = message['date'];
+                        addHTML(id, password, contents, date);
+                    }
+                }
+            });
+        }
+        //
+        function addHTML(id, password, contents, date) {
+            // 1. HTML 태그를 만듭니다.
+            let tempHtml = `<div class="card" style="margin: auto;width: 300px;border: #212529 solid;">
+                <!-- date/username 영역 -->
+                <div class="metadata">
+                    <div class="date">
+                        ${date}
+                    </div>
+                    <div id="${id}-username">
+                         당신의 비번 : ${password}
+                    </div>
+                    <div >
+                         내용 : ${contents}
+                    </div>
+                </div>
+            </div><br>`;
+            // 2. #cards-box 에 HTML을 붙인다.
+            $('#cards-box').append(tempHtml);
+        }
+
+        //
+        function isValidContents(contents) {
+            if (contents == '') {
+                alert('검색 용어를');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+
+<div style="text-align: center;margin-top: 100px">
+    <a href="index.html"> 홈페이지 이동</a>
+    <br><br><br>
+<label>  아이디로 검색 창:</label><br>
+<input type="text"  name ="search" id="search">
+    <button onclick="SearchPost()">
+        검색
+    </button>
+<br><br>
+</div>
+<div style="text-align: center;margin-top: 100px">
+    <br><br><br>
+    <label>  날자 검색 창:</label><br>
+    <input type="date"  name ="searchbydate" id="searchbydate">
+    <button onclick="SearchByDate()">
+        검색
+    </button>
+    <br><br>
+    <label>검색 결과:</label>
+    <div id="cards-box">
+    </div>
+
+</div>
+</body>
+</html>

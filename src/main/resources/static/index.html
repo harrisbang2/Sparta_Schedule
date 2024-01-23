@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memo Service</title>
+    <title>Schedule Service</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
@@ -46,10 +46,11 @@
         .background-header {
             position: fixed;
             z-index: -1;
+            text-align: center;
             top: 0px;
             width: 100%;
             height: 428px;
-            background-color: #339af0;
+            background-color: wheat;
         }
 
         .background-body {
@@ -58,7 +59,7 @@
             top: 428px;
             height: 100%;
             width: 100%;
-            background-color: #dee2e6;
+            background-color: wheat;
         }
 
         .header {
@@ -75,7 +76,7 @@
             line-height: 0.79;
             letter-spacing: -0.5px;
             text-align: center;
-            color: #ffffff;
+            color: red;
         }
 
         .header p {
@@ -90,7 +91,7 @@
             line-height: 1.5;
             letter-spacing: -1.12px;
             text-align: center;
-            color: #ffffff;
+            color: red;
         }
 
         textarea.field {
@@ -120,7 +121,7 @@
         .card {
             width: 538px;
             border-radius: 5px;
-            background-color: #ffffff;
+            background-color: pink;
             margin-bottom: 12px;
         }
 
@@ -135,7 +136,7 @@
             line-height: 1;
             letter-spacing: -0.77px;
             text-align: left;
-            color: #adb5bd;
+            color: red;
             height: 14px;
             padding: 10px 23px;
         }
@@ -219,25 +220,29 @@
             return true;
         }
 
-        // 익명의 username을 만듭니다.
-        function genRandomName(length) {
-            let result = '';
-            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let charactersLength = characters.length;
-            for (let i = 0; i < length; i++) {
-                let number = Math.random() * charactersLength;
-                let index = Math.floor(number);
-                result += characters.charAt(index);
-            }
-            return result;
-        }
-
         // 수정 버튼을 눌렀을 때, 기존 작성 내용을 textarea 에 전달합니다.
         // 숨길 버튼을 숨기고, 나타낼 버튼을 나타냅니다.
         function editPost(id) {
-            showEdits(id);
-            let contents = $(`#${id}-contents`).text().trim();
-            $(`#${id}-textarea`).val(contents);
+            let input = prompt("비번을 입력해주세요!");
+            let urls = "/api/schedule/password/"+id;
+            // 비번 확인을 위해 비번 받기
+            $.ajax({
+                type: "GET",
+                url: urls,
+                data: {}, // GET 요청 시엔 비워둔다.
+                success: function(response) { // 서버에서 받은 결과
+                    let password =response;
+                    console.log(response);
+                    if(input === password){
+                        showEdits(id);
+                        let contents = $(`#${id}-contents`).text().trim();
+                        $(`#${id}-textarea`).val(contents);
+                    }
+                    else {
+                        alert("삐빅 비번이 다릅니다 : "+password);
+                    }
+                }
+            })
         }
 
         function showEdits(id) {
@@ -261,31 +266,31 @@
             // 2. 메모 목록을 불러와서 HTML로 붙입니다.
             $.ajax({
                 type: 'GET',
-                url: '/api/memos',
+                url: '/api/schedule',
                 success: function (response) {
                     for (let i = 0; i < response.length; i++) {
                         let message = response[i];
                         let id = message['id'];
-                        let username = message['username'];
+                        let password = message['password'];
                         let contents = message['contents'];
-                        let modifiedAt = message['modifiedAt'];
-                        addHTML(id, username, contents, modifiedAt);
+                        let date = message['date'];
+                        addHTML(id, password, contents, date);
                     }
                 }
             })
         }
 
         // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
-        function addHTML(id, username, contents, modifiedAt) {
+        function addHTML(id, password, contents, date) {
             // 1. HTML 태그를 만듭니다.
             let tempHtml = `<div class="card">
                 <!-- date/username 영역 -->
                 <div class="metadata">
                     <div class="date">
-                        ${modifiedAt}
+                        ${date}
                     </div>
-                    <div id="${id}-username" class="username">
-                        ${username}
+                    <div id="${id}-username">
+                         당신의 비번 : ${password}
                     </div>
                 </div>
                 <!-- contents 조회/수정 영역-->
@@ -317,16 +322,16 @@
             if (isValidContents(contents) == false) {
                 return;
             }
-            // 3. genRandomName 함수를 통해 익명의 username을 만듭니다.
-            let username = genRandomName(10);
-
+            // // 2. 작성한 password 불러옵니다..
+            let password = $('#password').val();
+            let date = $('#date').val();
             // 4. 전달할 data JSON으로 만듭니다.
-            let data = {'username': username, 'contents': contents};
+            let data = {'contents': contents,'password': password ,'date':date};
 
-            // 5. POST /api/memos 에 data를 전달합니다.
+            // 5. POST /api/schedule 에 data를 전달합니다.
             $.ajax({
                 type: "POST",
-                url: "/api/memos",
+                url: "/api/schedule",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -338,8 +343,8 @@
 
         // 메모를 수정합니다.
         function submitEdit(id) {
-            // 1. 작성 대상 메모의 username과 contents 를 확인합니다.
-            let username = $(`#${id}-username`).text().trim();
+            // 1. 작성 대상 메모의 password랑 contents 를 확인합니다.
+            let password = $(`#${id}-password`).text().trim();
             let contents = $(`#${id}-textarea`).val().trim();
 
             // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
@@ -348,12 +353,12 @@
             }
 
             // 3. 전달할 data JSON으로 만듭니다.
-            let data = {'username': username, 'contents': contents};
+            let data = {'password': password, 'contents': contents};
 
-            // 4. PUT /api/memos/{id} 에 data를 전달합니다.
+            // 4. PUT /api/schedule/{id} 에 data를 전달합니다.
             $.ajax({
                 type: "PUT",
-                url: `/api/memos/${id}`,
+                url: `/api/schedule/${id}`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
@@ -365,10 +370,10 @@
 
         // 메모를 삭제합니다.
         function deleteOne(id) {
-            // 1. DELETE /api/memos/{id} 에 요청해서 메모를 삭제합니다.
+            // 1. DELETE /api/schedule/{id} 에 요청해서 메모를 삭제합니다.
             $.ajax({
                 type: "DELETE",
-                url: `/api/memos/${id}`,
+                url: `/api/schedule/${id}`,
                 success: function (response) {
                     alert('메시지 삭제에 성공하였습니다.');
                     window.location.reload();
@@ -379,22 +384,28 @@
 </head>
 
 <body>
-<div class="background-header">
 
+<div class="background-header">
+    <a href="index.html"> 홈페이지</a>
+    <a href="search.html"> 검색 페이지</a>
 </div>
 <div class="background-body">
 
 </div>
 <div class="wrap">
     <div class="header">
-        <h2>Memo</h2>
+        <h2>Schedule</h2>
         <p>
-            공유하고 싶은 소식을 입력해주세요.
+            스케줄 작성하기!
         </p>
     </div>
     <div class="area-write">
-        <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30"
-                  rows="10"></textarea>
+        <textarea placeholder="비번!" name="contents" id="password" style="width:70px;height: 15px" cols="30"></textarea>
+        <br>
+        <input type="date" id="date" name="trip-start" value="2024-01-23" min="2024-01-23" max="2024-12-31" />
+        <br>
+        <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30" rows="10"></textarea>
+
         <!--            <button class="btn btn-danger" onclick="writePost()">작성하기</button>-->
         <img src="images/send.png" alt="" onclick="writePost()">
     </div>
@@ -423,5 +434,4 @@
     </div>
 </div>
 </body>
-
 </html>

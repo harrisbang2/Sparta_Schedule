@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,24 +25,37 @@ public class ScheduleController {
         this.service = service;
     }
 
-    @PostMapping("/memos")
-    public ScheduleResponseDto createMemo(@RequestBody ScheduleRequestDto requestDto) {
-       return service.createMemo(requestDto);
+    @PostMapping("/schedule")
+    public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto) {
+       return service.createSchedule(requestDto);
     }
 
-    @GetMapping("/memos")
-    public List<ScheduleResponseDto> getMemos() {
-        return service.getMemos();
+    @GetMapping("/schedule")
+    public List<ScheduleResponseDto> getSchedule() {
+        return service.getSchedule();
     }
 
-    @PutMapping("/memos/{id}")
-    public Long updateMemo(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
-        return service.updateMemo(id,requestDto);
+    @PutMapping("/schedule/{id}")
+    public Long updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+        return service.updateSchedule(id,requestDto);
     }
 
-    @DeleteMapping("/memos/{id}")
-    public Long deleteMemo(@PathVariable Long id) {
-        return service.deleteMemo(id);
+    @DeleteMapping("/schedule/{id}")
+    public Long deleteSchedule(@PathVariable Long id) {
+        return service.deleteSchedule(id);
     }
-
+    // getting password
+    @GetMapping("/schedule/password/{id}")
+    public String getPass(@PathVariable Long id){
+        return service.SearchMemo(id).getPassword();
+    }
+    // searching
+    @GetMapping("/schedule/search/{id}")
+    public Schedule Search(@PathVariable Long id){
+        return service.SearchMemo(id);
+    }
+    @GetMapping("/schedule/search/date/{id}")
+    public List SearchByDate(@PathVariable LocalDate id){
+        return service.SearchMemoDate(id);
+    }
 }
