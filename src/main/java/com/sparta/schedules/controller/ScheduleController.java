@@ -26,12 +26,12 @@ public class ScheduleController {
     }
 
     @PostMapping("/schedule")
-    public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto CreateDailySchedule(@RequestBody ScheduleRequestDto requestDto) {
        return service.createSchedule(requestDto);
     }
 
     @GetMapping("/schedule")
-    public List<ScheduleResponseDto> getSchedule() {
+    public List<ScheduleResponseDto> DisplayAllDaily() {
         return service.getSchedule();
     }
 
@@ -41,17 +41,17 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/schedule/{id}")
-    public Long deleteSchedule(@PathVariable Long id) {
+    public Long DeleteDailySchedule(@PathVariable Long id) {
         return service.deleteSchedule(id);
     }
     // getting password
     @GetMapping("/schedule/password/{id}")
-    public String getPass(@PathVariable Long id){
+    public String VertifyPass(@PathVariable Long id){
         return service.SearchMemo(id).getPassword();
     }
     // searching
     @GetMapping("/schedule/search/{id}")
-    public Schedule Search(@PathVariable Long id){
+    public Schedule SearchDailySchedule(@PathVariable Long id){
         return service.SearchMemo(id);
     }
     @GetMapping("/schedule/search/date/{id}")
