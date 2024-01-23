@@ -50,7 +50,7 @@
             top: 0px;
             width: 100%;
             height: 428px;
-            background-color: wheat;
+            background-color: #fcf6ed;
         }
 
         .background-body {
@@ -59,7 +59,7 @@
             top: 428px;
             height: 100%;
             width: 100%;
-            background-color: wheat;
+            background-color: #fcf6ed;
         }
 
         .header {
@@ -76,7 +76,7 @@
             line-height: 0.79;
             letter-spacing: -0.5px;
             text-align: center;
-            color: red;
+            color: #868e96;
         }
 
         .header p {
@@ -91,7 +91,7 @@
             line-height: 1.5;
             letter-spacing: -1.12px;
             text-align: center;
-            color: red;
+            color: #868e96;
         }
 
         textarea.field {
@@ -121,7 +121,7 @@
         .card {
             width: 538px;
             border-radius: 5px;
-            background-color: pink;
+            background-color: #34a8eb;
             margin-bottom: 12px;
         }
 
@@ -140,7 +140,15 @@
             height: 14px;
             padding: 10px 23px;
         }
-
+        input[type=text], input[type=date]select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
         .card .metadata .date {
 
         }
@@ -205,6 +213,29 @@
         #cards-box {
             margin-top: 12px;
         }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li {
+            float: left;
+        }
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
     </style>
     <script>
         // 사용자가 내용을 올바르게 입력하였는지 확인합니다.
@@ -223,7 +254,6 @@
         // 수정 버튼을 눌렀을 때, 기존 작성 내용을 textarea 에 전달합니다.
         // 숨길 버튼을 숨기고, 나타낼 버튼을 나타냅니다.
         function editPost(id) {
-            let input = prompt("비번을 입력해주세요!");
             let urls = "/api/schedule/password/"+id;
             // 비번 확인을 위해 비번 받기
             $.ajax({
@@ -232,6 +262,7 @@
                 data: {}, // GET 요청 시엔 비워둔다.
                 success: function(response) { // 서버에서 받은 결과
                     let password =response;
+                    let input = prompt("비번을 입력해주세요!");
                     console.log(response);
                     if(input === password){
                         showEdits(id);
@@ -351,10 +382,8 @@
             if (isValidContents(contents) == false) {
                 return;
             }
-
             // 3. 전달할 data JSON으로 만듭니다.
             let data = {'password': password, 'contents': contents};
-
             // 4. PUT /api/schedule/{id} 에 data를 전달합니다.
             $.ajax({
                 type: "PUT",
@@ -386,25 +415,31 @@
 <body>
 
 <div class="background-header">
-    <a href="index.html"> 홈페이지</a>
-    <a href="search.html"> 검색 페이지</a>
+    <ul>
+        <li><a class="active" href="index.html">홈페이지</a></li>
+        <li><a href="search.html">검색 페이지</a></li>
+    </ul>
 </div>
 <div class="background-body">
 
 </div>
 <div class="wrap">
     <div class="header">
+        <br>
+        <br>
         <h2>Schedule</h2>
         <p>
             스케줄 작성하기!
         </p>
     </div>
     <div class="area-write">
-        <textarea placeholder="비번!" name="contents" id="password" style="width:70px;height: 15px" cols="30"></textarea>
+        <label for="contents">비밀 번호 를 넣어주세요</label><br>
+        <input type="text" placeholder="비번!" name="contents" id="password" style="width:100px;height: 15px" cols="30"></input>
         <br>
+        <label for="date">날자 를 넣어주세요</label><br>
         <input type="date" id="date" name="trip-start" value="2024-01-23" min="2024-01-23" max="2024-12-31" />
-        <br>
-        <textarea class="field" placeholder="공유하고 싶은 소식을 입력해주세요" name="contents" id="contents" cols="30" rows="10"></textarea>
+        <br><br>
+        <textarea class="field" placeholder="일정을 정어주세요" name="contents" id="contents" cols="30" rows="10"></textarea>
 
         <!--            <button class="btn btn-danger" onclick="writePost()">작성하기</button>-->
         <img src="images/send.png" alt="" onclick="writePost()">
