@@ -39,16 +39,12 @@ public class ScheduleController {
     public Long updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         return service.updateSchedule(id,requestDto);
     }
-
+    // deleting the item.
     @DeleteMapping("/schedule/{id}")
     public Long DeleteDailySchedule(@PathVariable Long id) {
         return service.deleteSchedule(id);
     }
-    // getting password
-    @GetMapping("/schedule/password/{id}")
-    public String VertifyPass(@PathVariable Long id){
-        return service.SearchMemo(id).getPassword();
-    }
+
     // searching
     @GetMapping("/schedule/search/{id}")
     public Schedule SearchDailySchedule(@PathVariable Long id){

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@org.springframework.stereotype.Service
+@Service
 public class Services{
 
     private final Repository ScRepository;
