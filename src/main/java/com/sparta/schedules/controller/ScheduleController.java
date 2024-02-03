@@ -30,28 +30,30 @@ public class ScheduleController {
        return service.createSchedule(requestDto);
     }
 
+    // 가저오기
     @GetMapping("/schedule")
     public List<ScheduleResponseDto> DisplayAllDaily() {
         return service.getSchedule();
     }
 
+    // 수정 확인
     @PutMapping("/schedule/{id}")
     public Long updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
         return service.updateSchedule(id,requestDto);
     }
     // deleting the item.
     @DeleteMapping("/schedule/{id}")
-    public Long DeleteDailySchedule(@PathVariable Long id) {
+    public Long deleteDailySchedule(@PathVariable Long id) {
         return service.deleteSchedule(id);
     }
 
     // searching
     @GetMapping("/schedule/search/{id}")
-    public Schedule SearchDailySchedule(@PathVariable Long id){
+    public Schedule searchDailySchedule(@PathVariable Long id){
         return service.SearchMemo(id);
     }
     @GetMapping("/schedule/search/date/{id}")
-    public List SearchByDate(@PathVariable LocalDate id){
+    public List searchByDate(@PathVariable LocalDate id){
         return service.SearchMemoDate(id);
     }
 }

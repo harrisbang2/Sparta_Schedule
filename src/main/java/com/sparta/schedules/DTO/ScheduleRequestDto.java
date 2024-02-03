@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 @Getter
     public class ScheduleRequestDto {
-        private String contents;
-        private LocalDate date;
+    private LocalDate date;
+    private String contents;
     }
 
 
