@@ -6,40 +6,16 @@
     <title>Search Schedule</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/search.css">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-   <script src="js/index.js"></script>
-    <script>
-        function SearchByDate(){
-            $('#cards-box').empty();
-            let search = $('#searchbydate').val();
-            if (isValidContents(search) == false) {
-                return;
-            }
-            let the_url = "/api/schedule/search/date/"+search;
-            $.ajax({
-                type: "GET",
-                url: the_url,
-                contentType: "application/json",
-                data: JSON.stringify(search),
-                success: function (response) {
-                    alert('검색이 성공!');
-                    for (let i = 0; i < response.length; i++) {
-                        let message = response[i];
-                        let id = message['id'];
-                        let contents = message['contents'];
-                        let date = message['date'];
-                        addHTML(id, contents, date);
-                    }
-                }
-            });
-        }
-    </script>
+    <link rel="stylesheet" type="text/css" href="/css/search.css">
+    <script src="/js/search.js"></script>
+    <script src="/js/moving.js"></script>
+
 </head>
 <body style="background-color: #fcf6ed">
 <ul>
-    <li><a href="index.html">홈페이지</a></li>
-    <li><a href="search.html">검색하기</a></li>
+    <li><a href="javascript:homePage()">홈페이지</a></li>
+    <li><a href="javascript:SearchPage()">검색 페이지</a></li>
 </ul>
 <div style="margin: 30px auto 30px auto;width: 500px;text-align: center">
 </div>
