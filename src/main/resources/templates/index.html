@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="../css/index.css">
     <script src="../js/index.js"></script>
     <script src="../js/moving.js"></script>
+    <script>
+        function logout() {
+            // 토큰 삭제 요청.
+            $.ajax({
+                type: "GET",
+                url: `/logout`,
+                success: function (response) {
+                    alert('로그아웃');
+                    window.location.reload();
+                }
+            })
+        }
+    </script>
 </head>
 
 <body>
@@ -18,7 +31,7 @@
         <li><a href="javascript:homePage()">홈페이지</a></li>
         <li><a href="javascript:SearchPage()">검색 페이지</a></li>
     </ul>
-    <a id="login-text" href="javascript:homePage()">
+    <a id="login-text" href="javascript:logout()">
         로그아웃
     </a>
 <div class="background-body">

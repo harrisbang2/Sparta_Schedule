@@ -20,12 +20,3 @@ function homePage() {
     //Cookies.remove('Authorization', { path: '/' });
     window.location.href = host + "/";
 }
-
-function getToken() {
-    let auth = Cookies.get('Authorization');
-
-    if(auth === undefined) {
-        return '';
-    }
-    return auth;
-}
