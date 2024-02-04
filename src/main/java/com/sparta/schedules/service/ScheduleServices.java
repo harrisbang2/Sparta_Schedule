@@ -3,6 +3,7 @@ package com.sparta.schedules.service;
 import com.sparta.schedules.Dto.ScheduleRequestDto;
 import com.sparta.schedules.Dto.ScheduleResponseDto;
 import com.sparta.schedules.entity.Schedule;
+import com.sparta.schedules.entity.User;
 import com.sparta.schedules.repository.ScheduleRepository;
 
 import java.time.LocalDate;
@@ -19,9 +20,9 @@ public class ScheduleServices{
         this.ScRepository = ScRepository;
     }
 
-    public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto, User user) {
         // RequestDto -> Entity
-        Schedule sc = new Schedule(requestDto);
+        Schedule sc = new Schedule(requestDto,user);
 
         // DB 저장
         Schedule savesc = ScRepository.save(sc);
@@ -38,7 +39,7 @@ public class ScheduleServices{
     }
 
     @Transactional
-    public Long updateSchedule(Long id, ScheduleRequestDto requestDto) {
+    public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
         // 해당 메모가 DB에 존재하는지 확인
         Schedule sc = findMemo(id);
 
@@ -69,8 +70,7 @@ public class ScheduleServices{
                 new IllegalArgumentException("선택한 데이터는 존재하지 않습니다.")
         );
     }
-
-    public List SearchMemoDate(LocalDate id) {
+    public List SearchMemoDate(LocalDate id, User user) {
         return ScRepository.findByDate(id);
     }
 }

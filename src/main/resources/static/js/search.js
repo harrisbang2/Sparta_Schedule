@@ -191,4 +191,29 @@ function redisplay(){
             }
         }
     });
+
+}
+//searcb post
+function SearchPost(){
+    $('#cards-box').empty();
+    let search = $('#search').val();
+    if (isValidContents(search) == false) {
+        alert("검색결과가 없습니다!")
+        return;
+    }
+    let the_url = "/api/schedule/search/"+search;
+    $.ajax({
+        type: "GET",
+        url: the_url,
+        contentType: "application/json",
+        data: JSON.stringify(search),
+        success: function (response) {
+            alert('검색이 성공!');
+            let id = response['id'];
+            let password = response['password'];
+            let contents = response['contents'];
+            let date = response['date'];
+            addHTML(id, password, contents, date);
+        }
+    });
 }

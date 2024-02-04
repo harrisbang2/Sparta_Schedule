@@ -81,8 +81,4 @@ import java.util.Optional;
             String token = jwtUtil.createToken(user.getUsername(), user.getRole());
             jwtUtil.addJwtToCookie(token, res);
         }
-
-        public void logout(HttpServletRequest res) {
-
-        }
     }

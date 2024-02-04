@@ -23,12 +23,15 @@ public class Schedule {
     private LocalDate date;
     //
     @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public Schedule(ScheduleRequestDto requestDto) {
+
+
+    public Schedule(ScheduleRequestDto requestDto, User user) {
         this.contents = requestDto.getContents();
         this.date = requestDto.getDate();
+        this.user = user;
     }
 
     public void update(ScheduleRequestDto requestDto) {

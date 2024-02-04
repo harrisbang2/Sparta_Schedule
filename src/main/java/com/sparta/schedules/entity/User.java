@@ -35,7 +35,7 @@ public class User {
     private UserRoleEnum role;
 
     @OneToMany
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     List<Schedule> schedules = new ArrayList<>();
 
     public User(String username, String password, String email, UserRoleEnum role){
