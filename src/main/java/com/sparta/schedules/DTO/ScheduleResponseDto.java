@@ -1,6 +1,6 @@
 package com.sparta.schedules.DTO;
 
-import com.sparta.schedules.entitiy.Schedule;
+import com.sparta.schedules.entity.Schedule;
 import lombok.Getter;
 
 import java.time.LocalDate;

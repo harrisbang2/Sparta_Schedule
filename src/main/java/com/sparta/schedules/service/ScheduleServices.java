@@ -2,24 +2,20 @@ package com.sparta.schedules.service;
 
 import com.sparta.schedules.DTO.ScheduleRequestDto;
 import com.sparta.schedules.DTO.ScheduleResponseDto;
-import com.sparta.schedules.entitiy.Schedule;
-import com.sparta.schedules.repository.Repository;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import com.sparta.schedules.entity.Schedule;
+import com.sparta.schedules.repository.ScheduleRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
-public class Services{
+public class ScheduleServices{
 
-    private final Repository ScRepository;
+    private final ScheduleRepository ScRepository;
 
-    public Services(Repository ScRepository) {
+    public ScheduleServices(ScheduleRepository ScRepository) {
         this.ScRepository = ScRepository;
     }
 

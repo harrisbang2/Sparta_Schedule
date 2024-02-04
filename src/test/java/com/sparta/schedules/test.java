@@ -1,6 +1,6 @@
 //package com.sparta.schedules;
 //
-//import com.sparta.schedules.entitiy.Schedule;
+//import com.sparta.schedules.entity.Schedule;
 //import jakarta.persistence.EntityManager;
 //import jakarta.persistence.PersistenceContext;
 //import org.junit.jupiter.api.DisplayName;

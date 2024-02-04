@@ -1,4 +1,4 @@
-package com.sparta.schedules.entitiy;
+package com.sparta.schedules.entity;
 
 import com.sparta.schedules.DTO.ScheduleRequestDto;
 import jakarta.persistence.*;
