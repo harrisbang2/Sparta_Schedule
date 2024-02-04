@@ -1,7 +1,6 @@
-package com.sparta.schedules.DTO;
+package com.sparta.schedules.Dto;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 public class UserRequestDto {

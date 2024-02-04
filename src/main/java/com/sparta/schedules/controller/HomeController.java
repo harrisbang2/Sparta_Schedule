@@ -12,5 +12,9 @@ public class HomeController {
         model.addAttribute("username", "username");
         return "index";
     }
-
+    @GetMapping("/api/user/search-page")
+    public String searchpage(Model model) {
+        model.addAttribute("username", "username");
+        return "search";
+    }
 }

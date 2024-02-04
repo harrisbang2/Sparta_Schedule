@@ -1,9 +1,11 @@
 package com.sparta.schedules.controller;
 
-import com.sparta.schedules.DTO.ScheduleRequestDto;
-import com.sparta.schedules.DTO.ScheduleResponseDto;
+import com.sparta.schedules.Dto.ScheduleRequestDto;
+import com.sparta.schedules.Dto.ScheduleResponseDto;
 import com.sparta.schedules.entity.Schedule;
+import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.ScheduleServices;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -46,6 +48,7 @@ public class ScheduleController {
     }
     @GetMapping("/schedule/search/date/{id}")
     public List searchByDate(@PathVariable LocalDate id){
+
         return service.SearchMemoDate(id);
     }
 }
