@@ -8,6 +8,7 @@ import com.sparta.schedules.repository.ScheduleRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,7 @@ public class ScheduleServices{
     @Transactional
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
         // 해당 메모가 DB에 존재하는지 확인
-        Schedule sc = findMemo(id);
+        Schedule sc = findMemo(id, user);
 
         // memo 내용 수정
         sc.update(requestDto);
@@ -49,9 +50,9 @@ public class ScheduleServices{
         return id;
     }
 
-    public Long deleteSchedule(Long id) {
+    public Long deleteSchedule(Long id, User user) {
         // 해당 메모가 DB에 존재하는지 확인
-        Schedule sc = findMemo(id);
+        Schedule sc = findMemo(id,user);
 
         // memo 삭제
         ScRepository.delete(sc);
@@ -59,18 +60,22 @@ public class ScheduleServices{
         return id;
     }
 
-    private Schedule findMemo(Long id) {
-        return ScRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("선택한 데이터는 는 존재하지 않습니다.")
-        );
+    private Schedule findMemo(Long id, User user) {
+        return ScRepository.findByIdAndUser(id,user);
     }
 
-    public Schedule SearchMemo(Long id) {
-        return ScRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("선택한 데이터는 존재하지 않습니다.")
-        );
+    // 검색
+    public Schedule SearchMemo(Long id, User user) {
+        System.out.println("아이디 :"+id+"user : " +user);
+        System.out.println("아이디 :"+id+"user : " +user);
+        System.out.println("아이디 :"+id+"user : " +user);
+        System.out.println("아이디 :"+id+"user : " +user);
+        System.out.println("아이디 :"+id+"user : " +user);
+        System.out.println("아이디 :"+id+"user : " +user);
+
+        return ScRepository.findByIdAndUser(id,user);
     }
     public List SearchMemoDate(LocalDate id, User user) {
-        return ScRepository.findByDate(id);
+        return ScRepository.findAllByDateAndUser(id,user);
     }
 }

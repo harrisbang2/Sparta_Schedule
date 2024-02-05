@@ -62,84 +62,84 @@ function addHTML(id, contents, date) {
 }
 
 // 메모를 생성합니다.
-function writePost() {
-    // 1. 작성한 메모를 불러옵니다.
-    let contents = $('#contents').val();
-
-    // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
-    if (isValidContents(contents) == false) {
-        return;
-    }
-    let date = $('#date').val();
-    // 4. 전달할 data JSON으로 만듭니다.
-    let data = {'contents': contents,'date':date};
-
-    // 5. POST /api/schedule 에 data를 전달합니다.
-    $.ajax({
-        type: "POST",
-        url: "/api/schedule",
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function (response) {
-            alert('메시지가 성공적으로 작성되었습니다.');
-            window.location.reload();
-        }
-    });
-}
+// function writePost() {
+//     // 1. 작성한 메모를 불러옵니다.
+//     let contents = $('#contents').val();
+//
+//     // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+//     if (isValidContents(contents) == false) {
+//         return;
+//     }
+//     let date = $('#date').val();
+//     // 4. 전달할 data JSON으로 만듭니다.
+//     let data = {'contents': contents,'date':date};
+//
+//     // 5. POST /api/schedule 에 data를 전달합니다.
+//     $.ajax({
+//         type: "POST",
+//         url: "/api/schedule",
+//         contentType: "application/json",
+//         data: JSON.stringify(data),
+//         success: function (response) {
+//             alert('메시지가 성공적으로 작성되었습니다.');
+//             window.location.reload();
+//         }
+//     });
+// }
 
 // 메모를 수정합니다.
-function editPost(id) {
-    let urls = "/api/schedule/search/"+id;
-    // 비번 확인을 위해 비번 받기
-    $.ajax({
-        type: "GET",
-        url: urls,
-        data: {}, // GET 요청 시엔 비워둔다.
-        success: function(response) { // 서버에서 받은 결과
-            showEdits(id);
-            let contents = $(`#${id}-contents`).text().trim();
-            $(`#${id}-textarea`).val(contents);
-        }
-    })
-}
-
+// function editPost(id) {
+//     let urls = "/api/schedule/search/"+id;
+//     // 비번 확인을 위해 비번 받기
+//     $.ajax({
+//         type: "GET",
+//         url: urls,
+//         data: {}, // GET 요청 시엔 비워둔다.
+//         success: function(response) { // 서버에서 받은 결과
+//             showEdits(id);
+//             let contents = $(`#${id}-contents`).text().trim();
+//             $(`#${id}-textarea`).val(contents);
+//         }
+//     })
+// }
 //
-function submitEdit(id) {
-    // 1. 작성 대상 메모의 contents 를 확인합니다.
-    let contents = $(`#${id}-textarea`).val().trim();
-    let date = new Date();
-    // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
-    if (isValidContents(contents) == false) {
-        return;
-    }
-    // 3. 전달할 data JSON으로 만듭니다.
-    let data = {'contents': contents,'date' : date};
-    // 4. PUT /api/schedule/{id} 에 data를 전달합니다.
-    $.ajax({
-        type: "PUT",
-        url: `/api/schedule/${id}`,
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function (response) {
-            alert('메시지 변경에 성공하였습니다.');
-            window.location.reload();
-            ///
-        }
-    });
-}
-
-// 메모를 삭제합니다.
-function deleteOne(id) {
-    // 1. DELETE /api/schedule/{id} 에 요청해서 메모를 삭제합니다.
-    $.ajax({
-        type: "DELETE",
-        url: `/api/schedule/${id}`,
-        success: function (response) {
-            alert('메시지 삭제에 성공하였습니다.');
-            window.location.reload();
-        }
-    })
-}
+// //
+// function submitEdit(id) {
+//     // 1. 작성 대상 메모의 contents 를 확인합니다.
+//     let contents = $(`#${id}-textarea`).val().trim();
+//     let date = new Date();
+//     // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
+//     if (isValidContents(contents) == false) {
+//         return;
+//     }
+//     // 3. 전달할 data JSON으로 만듭니다.
+//     let data = {'contents': contents,'date' : date};
+//     // 4. PUT /api/schedule/{id} 에 data를 전달합니다.
+//     $.ajax({
+//         type: "PUT",
+//         url: `/api/schedule/${id}`,
+//         contentType: "application/json",
+//         data: JSON.stringify(data),
+//         success: function (response) {
+//             alert('메시지 변경에 성공하였습니다.');
+//             window.location.reload();
+//             ///
+//         }
+//     });
+// }
+//
+// // 메모를 삭제합니다.
+// function deleteOne(id) {
+//     // 1. DELETE /api/schedule/{id} 에 요청해서 메모를 삭제합니다.
+//     $.ajax({
+//         type: "DELETE",
+//         url: `/api/schedule/${id}`,
+//         success: function (response) {
+//             alert('메시지 삭제에 성공하였습니다.');
+//             window.location.reload();
+//         }
+//     })
+// }
 
 
 ////// 날자로 검색

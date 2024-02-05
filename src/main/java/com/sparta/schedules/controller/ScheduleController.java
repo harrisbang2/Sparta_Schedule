@@ -37,18 +37,18 @@ public class ScheduleController {
     }
     // deleting the item.
     @DeleteMapping("/schedule/{id}")
-    public Long deleteDailySchedule(@PathVariable Long id) {
-        return service.deleteSchedule(id);
+    public Long deleteDailySchedule(@PathVariable Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return service.deleteSchedule(id,userDetails.getUser());
     }
 
     // searching
     @GetMapping("/schedule/search/{id}")
-    public Schedule searchDailySchedule(@PathVariable Long id){
-        return service.SearchMemo(id);
+    public Schedule searchDailySchedule(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return service.SearchMemo(id,userDetails.getUser());
     }
     @GetMapping("/schedule/search/date/{date}")
     public List searchByDate(@PathVariable LocalDate date,@AuthenticationPrincipal UserDetailsImpl userDetails){
-
-        return service.SearchMemoDate(date,userDetails.getUser());
+        return service.getSchedule();
+//        return service.SearchMemoDate(date,userDetails.getUser());
     }
 }
