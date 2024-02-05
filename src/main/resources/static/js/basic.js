@@ -10,11 +10,11 @@ $(document).ready(function () {
     }
 })
 
-function logout() {
-    // 토큰 삭제
-    Cookies.remove('Authorization', { path: '/' });
-    window.location.href = host + "/api/user/login-page";
-}
+// function logout() {
+//     // 토큰 삭제
+//     Cookies.remove('Authorization', { path: '/' });
+//     window.location.href = host + "/api/user/login-page";
+// }
 
 function getToken() {
     let auth = Cookies.get('Authorization');
