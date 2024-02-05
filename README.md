@@ -32,3 +32,4 @@ API 명세서 :
 | search.html 이동 | GET  | /api/user/search-page    |  Model |  String |
 
 
+<img src="usecase.jpg"/>
