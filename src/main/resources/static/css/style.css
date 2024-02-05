@@ -4,6 +4,7 @@
 
 body {
     margin: 0px;
+    background-color: wheat;
 }
 
 .header {
@@ -41,7 +42,7 @@ body {
     padding: 56px 0 0;
     border-radius: 10px;
     box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.15);
-    background-color: #414141;
+    background-color: #cccccc;
 }
 
 #login-title {
@@ -57,7 +58,7 @@ body {
     line-height: 1;
     letter-spacing: -0.96px;
     text-align: left;
-    color: #212529;
+    color: #111111;
 }
 
 #login-kakao-btn {
@@ -148,7 +149,7 @@ body {
     margin: 40px 0 0;
     padding: 11px 12px;
     border-radius: 5px;
-    background-color: #15aabf;
+    background-color: #111111;
 
     font-family: SpoqaHanSansNeo;
     font-size: 20px;
