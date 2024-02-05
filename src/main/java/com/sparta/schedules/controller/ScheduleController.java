@@ -26,29 +26,29 @@ public class ScheduleController {
 
     // 가저오기
     @GetMapping("/schedule")
-    public List<ScheduleResponseDto> DisplayAllDaily() {
-        return service.getSchedule();
+    public List<ScheduleResponseDto> DisplayAllDaily(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return service.getSchedule(userDetails.getUser());
     }
 
     // 수정 확인
     @PutMapping("/schedule/{id}")
-    public Long updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Long updateSchedule(@PathVariable(name = "id") Long id, @RequestBody ScheduleRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return service.updateSchedule(id,requestDto,userDetails.getUser());
     }
     // deleting the item.
     @DeleteMapping("/schedule/{id}")
-    public Long deleteDailySchedule(@PathVariable Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public Long deleteDailySchedule(@PathVariable(name = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return service.deleteSchedule(id,userDetails.getUser());
     }
 
     // searching
     @GetMapping("/schedule/search/{id}")
-    public Schedule searchDailySchedule(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return service.SearchMemo(id,userDetails.getUser());
+    public ScheduleResponseDto searchDailySchedule(@PathVariable(name = "id") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return service.searchMemo(id,userDetails.getUser());
     }
+    // searching by date
     @GetMapping("/schedule/search/date/{date}")
-    public List searchByDate(@PathVariable LocalDate date,@AuthenticationPrincipal UserDetailsImpl userDetails){
-        return service.getSchedule();
-//        return service.SearchMemoDate(date,userDetails.getUser());
+    public List<ScheduleResponseDto> searchByDate(@PathVariable(name="date") LocalDate date,@AuthenticationPrincipal UserDetailsImpl userDetails){
+       return service.searchMemoDate(date,userDetails.getUser());
     }
 }

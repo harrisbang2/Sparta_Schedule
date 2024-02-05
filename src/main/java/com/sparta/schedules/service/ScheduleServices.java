@@ -7,6 +7,7 @@ import com.sparta.schedules.entity.User;
 import com.sparta.schedules.repository.ScheduleRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class ScheduleServices{
         this.ScRepository = ScRepository;
     }
 
+    //// create
+    //// create
+    //// create
     public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto, User user) {
         // RequestDto -> Entity
         Schedule sc = new Schedule(requestDto,user);
@@ -34,48 +38,64 @@ public class ScheduleServices{
         return ScResponseDto;
     }
 
-    public List<ScheduleResponseDto> getSchedule() {
+    //// get
+    //// get
+    //// get
+    public List<ScheduleResponseDto> getSchedule(User userDetails) {
         // DB 조회
-        return ScRepository.findAll().stream().map(ScheduleResponseDto::new).toList();
+        return ScRepository.findByUser(userDetails);
     }
+
+    ////update
 
     @Transactional
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
         // 해당 메모가 DB에 존재하는지 확인
-        Schedule sc = findMemo(id, user);
-
-        // memo 내용 수정
-        sc.update(requestDto);
-
+        Schedule sc = findMemo(id);
+        // 유저 확인.
+        if(sc.getUser().equals(user)){
+            // memo 내용 수정
+            sc.update(requestDto);
+        }
+        else {
+            throw new IllegalStateException("유저가 다릅니다!!!!");
+        }
         return id;
     }
+
+    ////delete
 
     public Long deleteSchedule(Long id, User user) {
         // 해당 메모가 DB에 존재하는지 확인
-        Schedule sc = findMemo(id,user);
-
-        // memo 삭제
-        ScRepository.delete(sc);
+        Schedule sc = findMemo(id);
+        // 유저 확인.
+        if(sc.getUser().equals(user)){
+            // memo 삭제
+            ScRepository.delete(sc);
+        }
+        else {
+            throw new IllegalStateException("유저가 다릅니다!!!!");
+        }
 
         return id;
     }
-
-    private Schedule findMemo(Long id, User user) {
-        return ScRepository.findByIdAndUser(id,user);
+    //// Find by ID
+    private Schedule findMemo(Long id) {
+        return ScRepository.findById(id).orElseThrow();
     }
 
-    // 검색
-    public Schedule SearchMemo(Long id, User user) {
-        System.out.println("아이디 :"+id+"user : " +user);
-        System.out.println("아이디 :"+id+"user : " +user);
-        System.out.println("아이디 :"+id+"user : " +user);
-        System.out.println("아이디 :"+id+"user : " +user);
-        System.out.println("아이디 :"+id+"user : " +user);
-        System.out.println("아이디 :"+id+"user : " +user);
-
-        return ScRepository.findByIdAndUser(id,user);
+    // 검색 //// Find by ID + user
+    public ScheduleResponseDto searchMemo(Long id, User user) {
+        Schedule sc = ScRepository.findByIdAndUser(id,user);
+        ScheduleResponseDto scr = new ScheduleResponseDto(sc);
+        return scr;
     }
-    public List SearchMemoDate(LocalDate id, User user) {
-        return ScRepository.findAllByDateAndUser(id,user);
+    public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
+            List<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
+        List<ScheduleResponseDto> scr = new ArrayList<>();
+       for(Schedule sc : sclist){
+           scr.add(new ScheduleResponseDto(sc));
+       }
+        return scr;
     }
 }
