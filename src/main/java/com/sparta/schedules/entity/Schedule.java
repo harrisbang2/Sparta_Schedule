@@ -34,6 +34,11 @@ public class Schedule {
         this.user = user;
     }
 
+    public Schedule(ScheduleRequestDto requestDto) {
+        this.contents = requestDto.getContents();
+        this.date = requestDto.getDate();
+    }
+
     public void update(ScheduleRequestDto requestDto) {
         this.contents = requestDto.getContents();
         this.date = requestDto.getDate();

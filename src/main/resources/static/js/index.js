@@ -2,7 +2,6 @@
     // 사용자가 내용을 올바르게 입력하였는지 확인합니다.
     function isValidContents(contents) {
     if (contents == '') {
-    alert('내용을 입력해주세요');
     return false;
 }
     if (contents.trim().length > 140) {
@@ -22,11 +21,6 @@
     $(`#${id}-contents`).hide();
     $(`#${id}-edit`).hide();
 }
-
-    $(document).ready(function () {
-    // HTML 문서를 로드할 때마다 실행합니다.
-    getMessages();
-})
 
     // 메모를 불러와서 보여줍니다.
     function getMessages() {
@@ -72,9 +66,9 @@
                 </div>
                 <!-- 버튼 영역-->
                 <div class="footer">
-                    <img id="${id}-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="editPost('${id}')">
-                    <img id="${id}-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deleteOne('${id}')">
-                    <img id="${id}-submit" class="icon-end-edit" src="images/done.png" alt="" onclick="submitEdit('${id}')">
+                    <img id="${id}-edit" class="icon-start-edit" src="/images/edit.png" alt="" onclick="editPost('${id}')">
+                    <img id="${id}-delete" class="icon-delete" src="/images/delete.png" alt="" onclick="deleteOne('${id}')">
+                    <img id="${id}-submit" class="icon-end-edit" src="/images/done.png" alt="" onclick="submitEdit('${id}')">
                 </div>
             </div>`;
     // 2. #cards-box 에 HTML을 붙인다.
@@ -131,7 +125,7 @@
     // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
     if (isValidContents(contents) == false) {
     return;
-}
+        }
     // 3. 전달할 data JSON으로 만듭니다.
     let data = {'contents': contents,'date' : date};
     // 4. PUT /api/schedule/{id} 에 data를 전달합니다.

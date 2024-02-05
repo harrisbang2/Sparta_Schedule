@@ -1,5 +1,6 @@
 package com.sparta.schedules.repository;
 
+import com.sparta.schedules.Dto.ScheduleResponseDto;
 import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
     List<Schedule> findAllByDateAndUser(LocalDate date, User user);
 
     Schedule findByIdAndUser(Long id, User user);
+
+    List<ScheduleResponseDto> findByUser(User userDetails);
 }

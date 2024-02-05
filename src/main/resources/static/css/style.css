@@ -9,7 +9,7 @@ body {
 .header {
     height: 255px;
     box-sizing: border-box;
-    background-color: #15aabf;
+    background-color: #ffffff;
     color: white;
     text-align: center;
     padding-top: 80px;
@@ -41,7 +41,7 @@ body {
     padding: 56px 0 0;
     border-radius: 10px;
     box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.15);
-    background-color: #ffffff;
+    background-color: #414141;
 }
 
 #login-title {
