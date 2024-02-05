@@ -1,6 +1,5 @@
 package com.sparta.schedules.repository;
 
-import com.sparta.schedules.Dto.ScheduleResponseDto;
 import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

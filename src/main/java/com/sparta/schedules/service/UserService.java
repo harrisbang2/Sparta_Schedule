@@ -1,15 +1,12 @@
 package com.sparta.schedules.service;
 
-import com.sparta.schedules.*;
-import com.sparta.schedules.Dto.LoginRequestDto;
-import com.sparta.schedules.Dto.SignupRequestDto;
+import com.sparta.schedules.dto.LoginRequestDto;
+import com.sparta.schedules.dto.SignupRequestDto;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

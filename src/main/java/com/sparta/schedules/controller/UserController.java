@@ -1,7 +1,7 @@
 package com.sparta.schedules.controller;
 
-import com.sparta.schedules.Dto.LoginRequestDto;
-import com.sparta.schedules.Dto.SignupRequestDto;
+import com.sparta.schedules.dto.LoginRequestDto;
+import com.sparta.schedules.dto.SignupRequestDto;
 import com.sparta.schedules.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -30,7 +29,7 @@ public class UserController {
     public String signupPage() {
         return "signup";
     }
-    //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping("/user/signup")
     public String signup(SignupRequestDto requestDto) {
         userService.signup(requestDto);

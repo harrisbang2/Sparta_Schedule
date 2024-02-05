@@ -1,4 +1,4 @@
-package com.sparta.schedules.Dto;
+package com.sparta.schedules.dto;
 
 import com.sparta.schedules.entity.Schedule;
 import lombok.Getter;
