@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
     @GetMapping("/")
-    public String home(Model model) {
+    public String homePage(Model model) {
         model.addAttribute("username", "username");
         return "index";
     }
     @GetMapping("/api/user/search-page")
-    public String searchpage(Model model) {
+    public String searchPage(Model model) {
         model.addAttribute("username", "username");
         return "search";
     }
