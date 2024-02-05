@@ -13,5 +13,5 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
 
     Schedule findByIdAndUser(Long id, User user);
 
-    List<ScheduleResponseDto> findByUser(User userDetails);
+    List<Schedule> findByUser(User user);
 }

@@ -41,9 +41,14 @@ public class ScheduleServices{
     //// get
     //// get
     //// get
-    public List<ScheduleResponseDto> getSchedule(User userDetails) {
+    public List<ScheduleResponseDto> getSchedule(User user) {
         // DB 조회
-        return ScRepository.findByUser(userDetails);
+        List<Schedule> sclist = ScRepository.findByUser(user);
+        List<ScheduleResponseDto> scr = new ArrayList<>();
+        for(Schedule sc : sclist){
+            scr.add(new ScheduleResponseDto(sc));
+        }
+        return scr;
     }
 
     ////update
@@ -91,7 +96,7 @@ public class ScheduleServices{
         return scr;
     }
     public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
-            List<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
+        List<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
         List<ScheduleResponseDto> scr = new ArrayList<>();
        for(Schedule sc : sclist){
            scr.add(new ScheduleResponseDto(sc));
