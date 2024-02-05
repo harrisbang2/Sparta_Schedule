@@ -50,7 +50,6 @@ public class ScheduleServices{
         }
         return scr;
     }
-
     ////update
 
     @Transactional
@@ -58,7 +57,7 @@ public class ScheduleServices{
         // 해당 메모가 DB에 존재하는지 확인
         Schedule sc = findMemo(id);
         // 유저 확인.
-        if(sc.getUser().equals(user)){
+        if(sc.getUser().getId().equals(user.getId())){
             // memo 내용 수정
             sc.update(requestDto);
         }
@@ -74,7 +73,7 @@ public class ScheduleServices{
         // 해당 메모가 DB에 존재하는지 확인
         Schedule sc = findMemo(id);
         // 유저 확인.
-        if(sc.getUser().equals(user)){
+        if(sc.getUser().getId().equals(user.getId())){
             // memo 삭제
             ScRepository.delete(sc);
         }
