@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Service</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/index.js"></script>
+    <script src="../js/moving.js"></script>
+    <script>
+        $(document).ready(function () {
+            // HTML 문서를 로드할 때마다 실행합니다.
+            getMessages();
+        })
+        //
+        function logout() {
+            // 토큰 삭제 요청.
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }
+            $.ajax({
+                type: "GET",
+                url: `/logout`,
+                success: function (response) {
+                    alert('로그아웃');
+                    window.location.href = host + "/api/user/login-page";
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <ul>
+        <li><a href="javascript:homePage()">홈페이지</a></li>
+        <li><a href="javascript:SearchPage()">검색 페이지</a></li>
+        <li style="float:right;"><a id="login-text" href="javascript:logout()">로그아웃</a></li>
+    </ul>
+<div class="background-body">
+</div>
+<div class="wrap">
+    <div class="header">
+        <br>
+        <br>
+        <h2>Schedule</h2>
+        <p>
+            스케줄 작성하기!
+        </p>
+    </div>
+    <div class="area-write">
+        <br>
+        <label for="date">날자 를 넣어주세요</label><br>
+        <input type="date" id="date" name="trip-start" />
+        <br><br>
+        <textarea class="field" placeholder="일정을 정어주세요" name="contents" id="contents" cols="30" rows="10"></textarea>
+
+        <!--            <button class="btn btn-danger" onclick="writePost()">작성하기</button>-->
+        <img src="../images/send.png" alt="" onclick="writePost()">
+    </div>
+    <div id="cards-box" class="area-read">
+        <div class="card">
+            <!-- date 영역 -->
+            <div class="metadata">
+                <div class="date">
+
+                </div>
+                <div class="username">
+                    anonymous
+                </div>
+            </div>
+            <!-- contents 조회/수정 영역-->
+            <div class="contents">
+
+            </div>
+            <!-- 버튼 영역-->
+            <div class="footer">
+                <img id="1-edit" class="icon-start-edit" src="../images/edit.png" alt="" onclick="editPost('1')">
+                <img id="1-delete" class="icon-delete" src="../images/delete.png" alt="" onclick="deleteOne('1')">
+                <img id="1-submit" class="icon-end-edit" src="../images/done.png" alt="" onclick="submitEdit('1')">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

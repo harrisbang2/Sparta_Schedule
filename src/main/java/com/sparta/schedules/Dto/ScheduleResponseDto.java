@@ -1,6 +1,6 @@
-package com.sparta.schedules.DTO;
+package com.sparta.schedules.Dto;
 
-import com.sparta.schedules.entitiy.Schedule;
+import com.sparta.schedules.entity.Schedule;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -8,20 +8,17 @@ import java.time.LocalDate;
 @Getter
     public class ScheduleResponseDto {
         private Long id;
-        private String password;
         private String contents;
         private LocalDate date;
 
         public ScheduleResponseDto(Schedule sc) {
             this.id = sc.getId();
-            this.password = sc.getPassword();
             this.contents = sc.getContents();
             this.date = sc.getDate();
         }
 
-        public ScheduleResponseDto(Long id, String password, String contents,LocalDate date) {
+        public ScheduleResponseDto(Long id, String contents,LocalDate date) {
         this.id = id;
-        this.password = password;
         this.contents = contents;
         this.date = date;
         }

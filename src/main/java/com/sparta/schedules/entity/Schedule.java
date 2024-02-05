@@ -1,6 +1,6 @@
-package com.sparta.schedules.entitiy;
+package com.sparta.schedules.entity;
 
-import com.sparta.schedules.DTO.ScheduleRequestDto;
+import com.sparta.schedules.Dto.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,21 +17,29 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "password", nullable = true)
-    private String password;
     @Column(name = "contents", nullable = false)
     private String contents;
     @Column(name = "date", nullable = false)
     private LocalDate date;
+    //
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
+    public Schedule(ScheduleRequestDto requestDto, User user) {
+        this.contents = requestDto.getContents();
+        this.date = requestDto.getDate();
+        this.user = user;
+    }
 
     public Schedule(ScheduleRequestDto requestDto) {
-        this.password = requestDto.getPassword();
         this.contents = requestDto.getContents();
         this.date = requestDto.getDate();
     }
 
     public void update(ScheduleRequestDto requestDto) {
-        this.password = requestDto.getPassword();
         this.contents = requestDto.getContents();
         this.date = requestDto.getDate();
     }
