@@ -45,7 +45,8 @@ API 명세서 :
 | 해당 댓들 삭제  | DELETE | /api/comment/{id}    | Long Id (댓글 ID),LoginRequestDto   |   Long  |
 
 
-
-
+ERD 다이어 그램
+<img src="ERD.jpg"/>
+USECASE 다이어 그램
 <img src="usecase.jpg"/>
 
