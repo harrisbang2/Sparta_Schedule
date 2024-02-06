@@ -20,3 +20,6 @@ function homePage() {
     //Cookies.remove('Authorization', { path: '/' });
     window.location.href = host + "/";
 }
+function toComment() {
+    window.location.href = host + "/api/user/comment-page";
+}
