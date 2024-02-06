@@ -49,7 +49,8 @@
                 <!-- date/username 영역 -->
                 <div class="metadata">
                     <div class="date">
-                        ${date}
+                        ${date} 
+                        <a href="javascript:commentPage()">검색 페이지 이동</a>
                     </div>
                     <div id="${id}-username">
                  
@@ -153,3 +154,11 @@
         }
     })
 }
+
+///// 커맨트 페이지 이동
+    function commentPage() {
+        alert("댓글(comment) 페이지 는 현제 구현이 안되어 있씁니다..");
+        // 오류
+        // window.location.href = host + "/api/user/comment-page";
+        window.location.href = host + "/";
+    }
