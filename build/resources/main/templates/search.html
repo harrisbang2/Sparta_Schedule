@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Search Schedule</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/search.css">
+    <script src="/js/search.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/moving.js"></script>
+    <script>
+        $(document).ready(function () {
+            // HTML 문서를 로드할 때마다 실행합니다.
+            redisplay();
+        })
+    </script>
+
+</head>
+<body style="background-color: #fcf6ed">
+<ul>
+    <ul>
+        <li><a href="javascript:homePage()">홈페이지</a></li>
+        <li><a href="javascript:searchPage()">검색 페이지</a></li>
+        <li style="float:right;"><a id="login-text" href="javascript:logout()">로그아웃</a></li>
+    </ul>
+</ul>
+<div style="margin: 30px auto 30px auto;width: 500px;text-align: center">
+</div>
+<div style="display: flex;width: 70%;margin: auto">
+<div style="text-align: center;width: 40%;margin: auto">
+    <br><br><br>
+<label>  아이디로 검색 창:</label><br>
+<input type="text"  name ="search" id="search">
+    <button onclick="SearchPost()">
+        검색
+    </button>
+<br><br>
+</div>
+<div style="text-align: center;width: 40%;margin: auto;">
+    <br><br><br>
+    <label>  날자 검색 창:</label><br>
+    <input type="date"  value="2024-02-06" name ="searchbydate" id="searchbydate">
+    <button onclick="SearchByDate()">
+        검색
+    </button>
+    <br><br>
+</div>
+</div>
+<div style="margin: 100px auto 100px auto;width: 500px">
+<label>검색 결과:</label>
+<div id="cards-box">
+</div>
+</div>
+</body>
+</html>
