@@ -49,7 +49,7 @@
                 <!-- date/username 영역 -->
                 <div class="metadata">
                     <div class="date">
-                        ${date} 
+                        ${date}
                         <a href="javascript:commentPage()">검색 페이지 이동</a>
                     </div>
                     <div id="${id}-username">

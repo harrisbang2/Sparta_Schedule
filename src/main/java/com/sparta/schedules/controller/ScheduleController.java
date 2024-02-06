@@ -5,6 +5,7 @@ import com.sparta.schedules.dto.ScheduleResponseDto;
 import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.ScheduleServices;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,19 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ScheduleController {
-    ScheduleServices service ;
-
+    @Autowired
+    private ScheduleServices service;
     @PostMapping("/schedule")
     public ScheduleResponseDto CreateDailySchedule(@RequestBody ScheduleRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
        return service.createSchedule(requestDto,userDetails.getUser());
     }
-
     // 가저오기
     @GetMapping("/schedule")
     public List<ScheduleResponseDto> DisplayAllDaily(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return service.getSchedule(userDetails.getUser());
     }
-
     // 수정 확인
     @PutMapping("/schedule/{id}")
     public Long updateSchedule(@PathVariable(name = "id") Long id, @RequestBody ScheduleRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -38,7 +37,6 @@ public class ScheduleController {
     public Long deleteDailySchedule(@PathVariable(name = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return service.deleteSchedule(id,userDetails.getUser());
     }
-
     // searching
     @GetMapping("/schedule/search/{id}")
     public ScheduleResponseDto searchDailySchedule(@PathVariable(name = "id") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
