@@ -54,11 +54,11 @@ public class ScheduleServices{
 
     @Transactional
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
-        // 해당 메모가 DB에 존재하는지 확인
+        //  DB에 존재하는지 확인
         Schedule sc = findMemo(id);
         // 유저 확인.
         if(sc.getUser().getId().equals(user.getId())){
-            // memo 내용 수정
+            //  내용 수정
             sc.update(requestDto);
         }
         else {
@@ -70,7 +70,7 @@ public class ScheduleServices{
     ////delete
 
     public Long deleteSchedule(Long id, User user) {
-        // 해당 메모가 DB에 존재하는지 확인
+        // 해당 DB에 존재하는지 확인
         Schedule sc = findMemo(id);
         // 유저 확인.
         if(sc.getUser().getId().equals(user.getId())){
@@ -80,7 +80,6 @@ public class ScheduleServices{
         else {
             throw new IllegalStateException("유저가 다릅니다!!!!");
         }
-
         return id;
     }
     //// Find by ID

@@ -39,4 +39,8 @@ public class Comment {
         this.schedule = sc;
         this.user = user;
     }
+
+    public void update(CommentRequestDto requestDto) {
+        this.comment = requestDto.getComment();
+    }
 }

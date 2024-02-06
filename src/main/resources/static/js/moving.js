@@ -10,7 +10,7 @@ let host = 'http://' + window.location.host;
 //     }
 // })
 
-function SearchPage() {
+function searchPage() {
     // 토큰 삭제
     //Cookies.remove('Authorization', { path: '/' });
     window.location.href = host + "/api/user/search-page";
@@ -20,6 +20,9 @@ function homePage() {
     //Cookies.remove('Authorization', { path: '/' });
     window.location.href = host + "/";
 }
-function toComment() {
-    window.location.href = host + "/api/user/comment-page";
+function commentPage() {
+    alert("오류로 작동이 안됩니다...");
+    // 오류
+    // window.location.href = host + "/api/user/comment-page";
+    window.location.href = host + "/";
 }

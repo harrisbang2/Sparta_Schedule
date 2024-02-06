@@ -27,8 +27,18 @@ public class CommentController {
     }
 
     /// get comments
-    @GetMapping("/comment/{id}")
-    public List<CommentResponseDto> getComments(@PathVariable(name="id") Long id){
+    @GetMapping("/comment")
+    public List<CommentResponseDto> getComments(@RequestParam(value = "ID") Long id){
         return service.getComments(id);
+    }
+    ///
+    @PutMapping("/comment/{id}")
+    public Long updateComment(@PathVariable(name = "id") Long id, @RequestBody CommentRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return service.updateComment(id,requestDto,userDetails.getUser());
+    }
+    // deleting the item.
+    @DeleteMapping("/comment/{id}")
+    public Long deleteComment(@PathVariable(name = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return service.deleteComment(id,userDetails.getUser());
     }
 }
