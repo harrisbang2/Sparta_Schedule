@@ -76,7 +76,6 @@ public class EntityTest extends TestTimeKeeper{
         sc = new Schedule(requestDto,user);
         //then
         assertNull(sc.getContents());
-
         //when
         sc.update("업데이트");
         //then
