@@ -6,6 +6,8 @@ import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.ScheduleServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +21,9 @@ public class ScheduleController {
     @Autowired
     private ScheduleServices service;
     @PostMapping("/schedule")
-    public ScheduleResponseDto CreateDailySchedule(@RequestBody ScheduleRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
-       return service.createSchedule(requestDto,userDetails.getUser());
+    public ResponseEntity<?> CreateDailySchedule(@RequestBody ScheduleRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+       return ResponseEntity.status(HttpStatus.CREATED)
+               .body(service.createSchedule(requestDto,userDetails.getUser()));
     }
     // 가저오기
     @GetMapping("/schedule")
@@ -29,18 +32,21 @@ public class ScheduleController {
     }
     // 수정 확인
     @PutMapping("/schedule/{id}")
-    public Long updateSchedule(@PathVariable(name = "id") Long id, @RequestBody ScheduleRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return service.updateSchedule(id,requestDto,userDetails.getUser());
+    public ResponseEntity<?> updateSchedule(@PathVariable(name = "id") Long id, @RequestBody ScheduleRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(service.updateSchedule(id,requestDto,userDetails.getUser()));
     }
     // deleting the item.
     @DeleteMapping("/schedule/{id}")
-    public Long deleteDailySchedule(@PathVariable(name = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return service.deleteSchedule(id,userDetails.getUser());
+    public ResponseEntity<?> deleteDailySchedule(@PathVariable(name = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(service.deleteSchedule(id,userDetails.getUser()));
     }
     // searching
     @GetMapping("/schedule/search/{id}")
-    public ScheduleResponseDto searchDailySchedule(@PathVariable(name = "id") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return service.searchMemo(id,userDetails.getUser());
+    public ResponseEntity<?> searchDailySchedule(@PathVariable(name = "id") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(service.searchMemo(id,userDetails.getUser()));
     }
     // searching by date
     @GetMapping("/schedule/search/date/{date}")

@@ -2,11 +2,7 @@ package com.sparta.schedules.controllertest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.schedules.config.WebSecurityConfig;
-import com.sparta.schedules.controller.ScheduleController;
 import com.sparta.schedules.controller.UserController;
-import com.sparta.schedules.entity.User;
-import com.sparta.schedules.entity.UserRoleEnum;
-import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -26,8 +21,8 @@ import java.security.Principal;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @WebMvcTest(
         controllers = {UserController.class},
         excludeFilters = {
@@ -38,7 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         }
 )
 
-public class UserControllerTest{
+public class HomeControllerTest {
+    @Autowired
     public MockMvc mvc;
     public Principal mockPricipal;
     @MockBean
@@ -47,32 +43,19 @@ public class UserControllerTest{
     public WebApplicationContext context;
     @Autowired
     public ObjectMapper objectMapper;
-
-    @BeforeEach
-    public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context)
-                    .apply(springSecurity(new MockSpringSecurityFilter())) // Add your custom filter
-                .build();
-    }
-
-    private void mockUserSetup() {
-        // Mock 테스트 유져 생성
-        String username = "user";
-        String password = "user";
-        String email = "harrisbang98@gmail.com";
-        UserRoleEnum role = UserRoleEnum.USER;
-        User testUser = new User(username, password, email, role);
-        UserDetailsImpl testUserDetails = new UserDetailsImpl(testUser);
-        mockPricipal = new UsernamePasswordAuthenticationToken(testUserDetails, "", testUserDetails.getAuthorities());
-    }
-
+//    @BeforeEach
+//    public void setup() {
+//        mvc = MockMvcBuilders.webAppContextSetup(context)
+//                .apply(springSecurity(new MockSpringSecurityFilter()))
+//                .build();
+//    }
     @Test
     @DisplayName("로그인 Page")
     void test1() throws Exception {
         // when - then
-        this.mvc.perform(get("/api/user/login-page"))
+        this.mvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("login"))
+                .andExpect(content().string("index"))
                 .andDo(print());
     }
 

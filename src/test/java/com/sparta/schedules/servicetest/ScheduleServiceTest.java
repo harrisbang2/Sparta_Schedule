@@ -10,6 +10,7 @@ import com.sparta.schedules.repository.ScheduleRepository;
 import com.sparta.schedules.repository.UserRepository;
 import com.sparta.schedules.service.ScheduleServices;
 import jakarta.servlet.http.HttpServletResponse;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.awaitility.Awaitility.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,14 +32,11 @@ public class ScheduleServiceTest {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    ScheduleRepository ScheduleRepository;
     JwtUtil jwtUtil;
     @Mock
-    ScheduleRepository ScheduleRepository;
-    @Mock
-    UserRepository userRepository;
-
-    @Mock
-    HttpServletResponse res;
+    ScheduleRepository MockScheduleRepository;
 
     @Test
     void create(){
@@ -55,7 +54,8 @@ public class ScheduleServiceTest {
         boolean hasError = false;
         try{
             Schedule sc = new Schedule(requestDto,user);
-            Schedule saves = ScheduleRepository.save(sc);
+            Schedule saves = MockScheduleRepository.save(sc);
+            //Schedule saves = ScheduleRepository.save(sc);
         }catch (Exception e){
             hasError = true;
         }
@@ -63,15 +63,27 @@ public class ScheduleServiceTest {
         assertFalse(hasError);
     }
     @Test
-    void get(){
-        
-    }
-    @Test
     void update(){
-
+        //given
+        User user = new User("user","user","harrisbang98@gmail.com", UserRoleEnum.USER);
+        user.setId(1L);
+        ScheduleRequestDto requestDto = new ScheduleRequestDto();
+        requestDto.setContents("테스트용 스케줄 변경 합니다");
+        ScheduleServices scheduleServices = new ScheduleServices(ScheduleRepository);
+        //when
+        Long l = scheduleServices.updateSchedule(1l, requestDto, user);
+        //then
+        assertEquals(1L,l);
     }
     @Test
     void delete(){
-
+    //given
+        User user = new User("user","user","harrisbang98@gmail.com", UserRoleEnum.USER);
+        user.setId(1L);
+        ScheduleServices scheduleServices = new ScheduleServices(ScheduleRepository);
+        //when
+        Long l = scheduleServices.deleteSchedule(1L, user);
+        //then
+        assertEquals(1L,l);
     }
 }

@@ -46,7 +46,8 @@ public class CommentService {
         // 유저 확인.
         if(comment.getUser().getId().equals(user.getId())){
             // 내용 수정
-            comment.update(requestDto);
+            System.out.println(requestDto.getComment());
+            comment.update(requestDto.getComment());
         }
         else {
             throw new IllegalStateException("유저가 다릅니다!!!!");
