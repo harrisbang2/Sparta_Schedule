@@ -34,7 +34,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 )
 
 public class HomeControllerTest {
-    @Autowired
     public MockMvc mvc;
     public Principal mockPricipal;
     @MockBean
