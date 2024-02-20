@@ -43,4 +43,8 @@ public class Schedule {
         this.contents = requestDto.getContents();
         this.date = requestDto.getDate();
     }
+    public void update(String s) {
+        this.contents = s;
+        this.date = LocalDate.now();
+    }
 }

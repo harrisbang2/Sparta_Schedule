@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ScheduleServices{
 
     private final ScheduleRepository ScRepository;
-
     public ScheduleServices(ScheduleRepository ScRepository) {
         this.ScRepository = ScRepository;
     }
@@ -30,12 +29,10 @@ public class ScheduleServices{
         Schedule sc = new Schedule(requestDto,user);
 
         // DB 저장
-        Schedule savesc = ScRepository.save(sc);
+        Schedule saves = ScRepository.save(sc);
 
         // Entity -> ResponseDto
-        ScheduleResponseDto ScResponseDto = new ScheduleResponseDto(savesc);
-
-        return ScResponseDto;
+        return new ScheduleResponseDto(saves);
     }
 
     //// get
