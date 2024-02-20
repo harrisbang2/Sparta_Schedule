@@ -95,6 +95,7 @@ public class EntityTest extends TestTimeKeeper{
         assertNull(cm.getComment());
 
         //when
+
         cm.update("커멘트 업뎃 입니다");
         //then
         assertEquals("커멘트 업뎃 입니다",cm.getComment());
