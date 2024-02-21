@@ -62,7 +62,6 @@ public class HomeControllerTest {
                 .build();
     }
 //
-
     @Test
     @DisplayName("index Page/html 가져오기")
     void test1() throws Exception {
@@ -87,7 +86,7 @@ public class HomeControllerTest {
         // when - then
         this.mvc.perform(get("/api/user/search-page"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("search"))
                 .andDo(print());
     }
 

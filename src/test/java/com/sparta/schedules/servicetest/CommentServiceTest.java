@@ -41,7 +41,7 @@ public class CommentServiceTest {
         Schedule schedule = new Schedule();
         schedule.setId(1L);
 
-        User user = new User("user","user","harrisbang98@gmail.com", UserRoleEnum.USER);
+        User user = new User();
         user.setId(1L);
 
         CommentService Services = new CommentService(MockCommentRepository,MockscheduleRepository);
@@ -60,7 +60,7 @@ public class CommentServiceTest {
     @Test
     void update(){
         //given
-        User user = new User("user","user","harrisbang98@gmail.com", UserRoleEnum.USER);
+        User user = new User();
         user.setId(1L);
 
         CommentRequestDto requestDto = new CommentRequestDto();
