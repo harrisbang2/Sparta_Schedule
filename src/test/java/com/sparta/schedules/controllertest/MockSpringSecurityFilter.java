@@ -18,7 +18,6 @@ public class MockSpringSecurityFilter implements Filter {
                 .setAuthentication((Authentication) ((HttpServletRequest) req).getUserPrincipal());
         chain.doFilter(req, res);
     }
-
     @Override
     public void destroy() {
         SecurityContextHolder.clearContext();

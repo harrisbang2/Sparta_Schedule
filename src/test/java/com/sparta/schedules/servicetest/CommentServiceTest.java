@@ -5,7 +5,6 @@ import com.sparta.schedules.entity.Comment;
 import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
-import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.CommentRepository;
 import com.sparta.schedules.repository.ScheduleRepository;
 import com.sparta.schedules.service.CommentService;
@@ -13,44 +12,45 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@SpringBootTest
+import static org.mockito.BDDMockito.given;
+
+
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTest {
-    @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
-    CommentRepository CommentRepository;
-    @Autowired
-    ScheduleRepository scheduleRepository;
-    JwtUtil jwtUtil;
     @Mock
     CommentRepository MockCommentRepository;
-
+    @Mock
+    ScheduleRepository MockscheduleRepository;
     @Test
     void create(){
         // given
         CommentRequestDto requestDto = new CommentRequestDto();
-        Schedule schedule = scheduleRepository.findById(1L).orElseThrow();
         requestDto.setComment("테스트용  댓글");
+        requestDto.setSchedule_id(1L);
+
+        Schedule schedule = new Schedule();
+        schedule.setId(1L);
 
         User user = new User("user","user","harrisbang98@gmail.com", UserRoleEnum.USER);
         user.setId(1L);
 
+        CommentService Services = new CommentService(MockCommentRepository,MockscheduleRepository);
         //when
         boolean hasError = false;
         try{
-            Comment sc = new Comment(requestDto,schedule,user);
-            Comment saves = MockCommentRepository.save(sc);
-            //Comment savesreal = CommentRepository.save(sc);
+            given(MockscheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
+            given(MockCommentRepository.save(any())).willReturn(new Comment());
+            Services.createComment(requestDto,user);
         }catch (Exception e){
             hasError = true;
         }
@@ -62,11 +62,27 @@ public class CommentServiceTest {
         //given
         User user = new User("user","user","harrisbang98@gmail.com", UserRoleEnum.USER);
         user.setId(1L);
+
         CommentRequestDto requestDto = new CommentRequestDto();
         requestDto.setComment("테스트용 댓글 변경 합니다");
-        CommentService Services = new CommentService(CommentRepository,scheduleRepository);
+        requestDto.setSchedule_id(1L);
+
+        Schedule schedule = new Schedule();
+        schedule.setId(1L);
+        schedule.setDate(LocalDate.now());
+        schedule.setUser(user);
+        schedule.setContents("init");
+
+        Comment comment = new Comment(requestDto,schedule,user);
+
+        CommentService commentService = new CommentService(MockCommentRepository,MockscheduleRepository);
         //when
-        Long l = Services.updateComment(1L, requestDto, user);
+        given(MockscheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
+        given(MockCommentRepository.findById(1L)).willReturn(Optional.of(comment));
+
+        when(comment.getUser().getId().equals(any())).thenReturn(true);
+
+        Long l = commentService.updateComment(1L, requestDto, user);
         //then
         assertEquals(1L,l);
     }
@@ -75,9 +91,22 @@ public class CommentServiceTest {
         //given
         User user = new User("user","user","harrisbang98@gmail.com", UserRoleEnum.USER);
         user.setId(1L);
-        CommentService Services = new CommentService(CommentRepository,scheduleRepository);
+
+        CommentRequestDto requestDto = new CommentRequestDto();
+        requestDto.setComment("테스트용 댓글 변경 합니다");
+        requestDto.setSchedule_id(1L);
+
+        Schedule schedule = new Schedule();
+        schedule.setId(1L);
+
+        Comment comment = new Comment(requestDto,schedule,user);
+        CommentService commentService = new CommentService(MockCommentRepository,MockscheduleRepository);
         //when
-        Long l = Services.deleteComment(1L, user);
+        given(MockCommentRepository.findById(1L)).willReturn(Optional.of(comment));
+        //comment =Mockito.mockStatic(Comment.class);
+        when(comment.getUser().getId().equals(any())).thenReturn(Boolean.TRUE);
+
+        Long l = commentService.deleteComment(1L, user);
         //then
         assertEquals(1L,l);
     }
