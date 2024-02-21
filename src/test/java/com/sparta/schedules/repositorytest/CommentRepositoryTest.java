@@ -27,8 +27,8 @@ public class CommentRepositoryTest {
     CommentRepository commentRepository;
 
     @Test
-    @DisplayName("댓글 생성 및 검색")
-    void createAndSearch(){
+    @DisplayName("댓글 테스트")
+    void test1(){
         Comment comment = new Comment();
         User user = new User();
         Schedule schedule = new Schedule();
