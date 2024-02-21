@@ -5,28 +5,15 @@ import com.sparta.schedules.dto.ScheduleResponseDto;
 import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
-import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.ScheduleRepository;
-import com.sparta.schedules.repository.UserRepository;
 import com.sparta.schedules.service.ScheduleServices;
-import jakarta.servlet.http.HttpServletResponse;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.internal.matchers.Null;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.reactive.function.server.MockServerRequest;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
