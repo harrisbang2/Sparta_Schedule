@@ -3,8 +3,7 @@ package com.sparta.schedules.servicetest;
 import com.sparta.schedules.dto.LoginRequestDto;
 import com.sparta.schedules.dto.SignupRequestDto;
 import com.sparta.schedules.entity.User;
-import com.sparta.schedules.entity.UserRoleEnum;
-import com.sparta.schedules.exception.NoSuchUserException;
+import org.mockito.MockedStatic;
 import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
 import com.sparta.schedules.service.UserService;
@@ -13,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -27,14 +28,16 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
-    @Autowired
+    @Mock
      PasswordEncoder passwordEncoder;
-    @Autowired
+    @Mock
      UserRepository loginRepo;
      private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     @Mock
     UserRepository mockRepo;
-
+    @Mock
+    HttpServletResponse response;
+    @Mock
     JwtUtil jwtUtil;
     //
 
@@ -45,38 +48,19 @@ public class UserServiceTest {
         //given
         boolean hasError = false;
         SignupRequestDto requestDto = new SignupRequestDto();
-        requestDto.setUsername("user");
+        requestDto.setUsername("usertest");
         requestDto.setPassword("password");
         requestDto.setEmail("harrisbang98@gmail.com");
-        User user = new User(requestDto);
-        //when
-        try {
-            String username = requestDto.getUsername();
-            String password = passwordEncoder.encode(requestDto.getPassword());
 
-            // 회원 중복 확인
-            Optional<User> checkUsername = mockRepo.findByUsername(username);
-            if (checkUsername.isPresent()) {
-                throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
-            }
-            // email 중복확인
-            String email = requestDto.getEmail();
-            Optional<User> checkEmail = mockRepo.findByEmail(email);
-            if (checkEmail.isPresent()) {
-                throw new IllegalArgumentException("중복된 Email 입니다.");
-            }
-            // 사용자 ROLE 확인
-            UserRoleEnum role = UserRoleEnum.USER;
-            if (requestDto.isAdmin()) {
-                if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
-                    throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
-                }
-                user.setRole(UserRoleEnum.ADMIN);
-            }
-            mockRepo.save(user);
-        }catch(IllegalArgumentException e){
+        //when
+        UserService userService = new UserService(loginRepo,passwordEncoder,jwtUtil);
+        try{
+            given(passwordEncoder.encode(requestDto.getPassword())).willReturn("password");
+            userService.signup(requestDto);
+        }catch (Exception e){
             hasError = true;
         }
+        //then
         assertFalse(hasError);
     }
     @Test
@@ -87,21 +71,22 @@ public class UserServiceTest {
         String username = "user";
         String password = "user";
         User user= new User();
+        UserService userService = new UserService(loginRepo,passwordEncoder,jwtUtil);
+        LoginRequestDto requestDto = new LoginRequestDto();
+        requestDto.setUsername(username);
+        requestDto.setPassword(password);
         //when
         try{
-            user = loginRepo.findByUsername(username).orElseThrow(
-                    NoSuchUserException::new
-            );
-            // 비밀번호 확인
-            if (!passwordEncoder.matches(password, user.getPassword())) {
-                throw new NoSuchUserException("아이디/비밀번호가 일치하지 않습니다.");
-            }
-        }
-        catch (Exception e){
+            given(loginRepo.findByUsername(username)).willReturn(Optional.of(user));
+            given(!passwordEncoder.matches(password, user.getPassword())).willReturn(true);
+            userService.login(requestDto,response);
+
+        }catch (Exception e){
             hasError = true;
         }
+
+
         //then
-        assertTrue(user.getEmail().equals("harrisbang98@gmail.com"));
         assertFalse(hasError);
     }
 }
