@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE,
@@ -42,6 +43,19 @@ public class CommentRepositoryTest {
         // 검색
         Comment save2 = commentRepository.findById(1L).orElseThrow(()-> new NoSuchElementException("해당댓글 없음"));
         assertEquals("댓글 생성",save2.getComment());
+
+        //수정
+        save2.update("댓글이 수정 된");
+        assertEquals("댓글이 수정 된",save2.getComment());
+
+        // 삭제
+        commentRepository.delete(save2);
+        try{
+            commentRepository.findById(1L).orElseThrow(()-> new NoSuchElementException("해당댓글 없음"));
+        }catch (NoSuchElementException e){
+            assertTrue(true);
+        }
+
     }
 
 }
