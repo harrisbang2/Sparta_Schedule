@@ -78,9 +78,8 @@ public class CommentServiceTest {
         CommentService commentService = new CommentService(MockCommentRepository,MockscheduleRepository);
         //when
         given(MockscheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-        given(MockCommentRepository.findById(1L)).willReturn(Optional.of(comment));
-
-        when(comment.getUser().getId().equals(any())).thenReturn(true);
+        given(MockCommentRepository.findBySchedule(schedule)).willReturn(comment);
+        //when(comment.getUser().getId().equals(any())).thenReturn(true);
 
         Long l = commentService.updateComment(1L, requestDto, user);
         //then
@@ -102,9 +101,8 @@ public class CommentServiceTest {
         Comment comment = new Comment(requestDto,schedule,user);
         CommentService commentService = new CommentService(MockCommentRepository,MockscheduleRepository);
         //when
-        given(MockCommentRepository.findById(1L)).willReturn(Optional.of(comment));
-        //comment =Mockito.mockStatic(Comment.class);
-        when(comment.getUser().getId().equals(any())).thenReturn(Boolean.TRUE);
+        given(MockscheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
+        given(MockCommentRepository.findBySchedule(schedule)).willReturn(comment);
 
         Long l = commentService.deleteComment(1L, user);
         //then
