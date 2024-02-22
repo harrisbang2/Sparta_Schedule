@@ -4,6 +4,7 @@ import com.sparta.schedules.dto.LoginRequestDto;
 import com.sparta.schedules.dto.SignupRequestDto;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
+import com.sparta.schedules.exception.NoSuchUserException;
 import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
@@ -66,7 +67,7 @@ import java.util.Optional;
 
             // 사용자 확인
             User user = userRepository.findByUsername(username).orElseThrow(
-                    () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
+                    NoSuchUserException::new
             );
 
             // 비밀번호 확인

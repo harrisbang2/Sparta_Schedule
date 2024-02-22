@@ -1,10 +1,10 @@
 package com.sparta.schedules.entity;
 
 //import com.sparta.schedules.entity.UserRoleEnum;
+import com.sparta.schedules.dto.SignupRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -43,6 +43,15 @@ public class User {
         this.password = password;
         this.email = email;
         this.role= role;
+    }
 
+    public User(SignupRequestDto requestDto) {
+        this.username = requestDto.getUsername();
+        this.password = requestDto.getPassword();
+        this.email = requestDto.getEmail();
+        if(requestDto.getAdminToken().equals("AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC"))
+            this.role = UserRoleEnum.ADMIN;
+        else
+            this.role = UserRoleEnum.USER;
     }
 }

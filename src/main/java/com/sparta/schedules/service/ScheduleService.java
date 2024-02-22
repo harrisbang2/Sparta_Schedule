@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ScheduleServices{
+public class ScheduleService {
 
     private final ScheduleRepository ScRepository;
-
-    public ScheduleServices(ScheduleRepository ScRepository) {
+    public ScheduleService(ScheduleRepository ScRepository) {
         this.ScRepository = ScRepository;
     }
 
@@ -30,12 +29,10 @@ public class ScheduleServices{
         Schedule sc = new Schedule(requestDto,user);
 
         // DB 저장
-        Schedule savesc = ScRepository.save(sc);
+        Schedule saves = ScRepository.save(sc);
 
         // Entity -> ResponseDto
-        ScheduleResponseDto ScResponseDto = new ScheduleResponseDto(savesc);
-
-        return ScResponseDto;
+        return new ScheduleResponseDto(saves);
     }
 
     //// get
