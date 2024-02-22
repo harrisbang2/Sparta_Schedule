@@ -2,7 +2,12 @@ package com.sparta.schedules.controllertest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.schedules.config.WebSecurityConfig;
+import com.sparta.schedules.controller.ScheduleController;
 import com.sparta.schedules.controller.UserController;
+import com.sparta.schedules.dto.ScheduleRequestDto;
+import com.sparta.schedules.entity.User;
+import com.sparta.schedules.entity.UserRoleEnum;
+import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.ScheduleServices;
 import com.sparta.schedules.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +18,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,16 +27,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(
-        controllers = {UserController.class},
+        controllers = {ScheduleController.class},
         excludeFilters = {
                 @ComponentScan.Filter(
                         type = FilterType.ASSIGNABLE_TYPE,
@@ -42,7 +49,7 @@ public class ScheduleControllerTest {
     public MockMvc mvc;
     public Principal mockPrincipal;
     @MockBean
-    ScheduleServices userService;
+    ScheduleServices scheduleService;
     @Autowired
     public WebApplicationContext context;
     @Autowired
@@ -54,17 +61,87 @@ public class ScheduleControllerTest {
                 .build();
     }
 
+    private void mockUserSetup() {
+        // Mock 테스트 유져 생성
+        String username = "user";
+        String password = "user";
+        String email = "user@user.com";
+        UserRoleEnum role = UserRoleEnum.USER;
+        User testUser = new User(username, password, email, role);
+        UserDetailsImpl testUserDetails = new UserDetailsImpl(testUser);
+        mockPrincipal = new UsernamePasswordAuthenticationToken(testUserDetails, "", testUserDetails.getAuthorities());
+    }
+
     @Test
     @DisplayName("Schedule post")
     void test1() throws Exception {
-        MultiValueMap<String, String> CommentRequestForm = new LinkedMultiValueMap<>();
-        CommentRequestForm.add("date", "2100/11/14");
-        CommentRequestForm.add("contents", "password");
+        //given
+        this.mockUserSetup();
+
+        String contents = "contents";
+        ScheduleRequestDto requestDto = new ScheduleRequestDto();
+        requestDto.setDate(LocalDate.now());
+        requestDto.setContents(contents);
+
+        String postform  = objectMapper.writeValueAsString(requestDto);
+
         // when - then
         this.mvc.perform(post("/api/schedule")
-                        .params(CommentRequestForm))
-                .andReturn()
-                .getResponse()
-                .getStatus();
+                        .content(postform)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .principal(mockPrincipal)
+                )
+                .andExpect(status().is(201))
+                .andDo(print());
+    }
+    @Test
+    @DisplayName("Schedule get")
+    void test2() throws Exception {
+        //given
+        this.mockUserSetup();
+
+        // when - then
+        this.mvc.perform(get("/api/schedule")
+                        .principal(mockPrincipal)
+                )
+                .andExpect(status().is(200))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("Schedule put")
+    void test3() throws Exception {
+//given
+        this.mockUserSetup();
+
+        String contents = "new content";
+        ScheduleRequestDto requestDto = new ScheduleRequestDto();
+        requestDto.setDate(LocalDate.now());
+        requestDto.setContents(contents);
+
+        String postform  = objectMapper.writeValueAsString(requestDto);
+
+        // when - then
+        this.mvc.perform(put("/api/schedule/1")
+                        .content(postform)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .principal(mockPrincipal)
+                )
+                .andExpect(status().is(201))
+                .andDo(print());
+}
+    @Test
+    @DisplayName("Schedule delete")
+    void test4() throws Exception {
+        //given
+        this.mockUserSetup();
+        // when - then
+        this.mvc.perform(delete("/api/schedule/1")
+                        .principal(mockPrincipal)
+                )
+                .andExpect(status().is(201))
+                .andDo(print());
     }
 }

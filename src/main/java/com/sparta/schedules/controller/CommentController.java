@@ -17,8 +17,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class CommentController {
-    @Autowired
     private CommentService service;
+
+    @Autowired
+    public CommentController(CommentService service) {
+        this.service = service;
+    }
+
     /// add comments
     @PostMapping("/comment")
     public ResponseEntity<?> CreateComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -27,8 +32,8 @@ public class CommentController {
     }
 
     /// get comments
-    @GetMapping("/comment")
-    public List<CommentResponseDto> getComments(@RequestParam(value = "ID") Long id){
+    @GetMapping("/comment/{id}")
+    public List<CommentResponseDto> getCommentsBySchedule(@PathVariable(value = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails){
         return service.getComments(id);
     }
     ///

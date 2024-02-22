@@ -34,8 +34,6 @@ public class UserServiceTest {
      UserRepository loginRepo;
      private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     @Mock
-    UserRepository mockRepo;
-    @Mock
     HttpServletResponse response;
     @Mock
     JwtUtil jwtUtil;

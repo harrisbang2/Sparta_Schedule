@@ -16,9 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-    @Autowired
     private final CommentRepository commentRepository;
-    @Autowired
     private final ScheduleRepository scheduleRepository;
 
 // 조회

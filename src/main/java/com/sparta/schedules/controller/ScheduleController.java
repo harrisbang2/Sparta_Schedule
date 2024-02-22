@@ -18,8 +18,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ScheduleController {
-    @Autowired
     private ScheduleServices service;
+
+    @Autowired
+    public ScheduleController(ScheduleServices service) {
+        this.service = service;
+    }
+
     @PostMapping("/schedule")
     public ResponseEntity<?> CreateDailySchedule(@RequestBody ScheduleRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
        return ResponseEntity.status(HttpStatus.CREATED)
