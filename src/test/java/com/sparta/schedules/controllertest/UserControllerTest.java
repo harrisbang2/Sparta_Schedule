@@ -79,4 +79,22 @@ public class UserControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("로그인 요청 처리")
+    void test3() throws Exception {
+        // given
+        MultiValueMap<String, String> signupRequestForm = new LinkedMultiValueMap<>();
+        signupRequestForm.add("username", "username");
+        signupRequestForm.add("password", "password");
+        signupRequestForm.add("email", "harrisbang98@email.com");
+        signupRequestForm.add("admin", "false");
+
+        // when - then
+        mvc.perform(post("/api/user/login")
+                        .params(signupRequestForm)
+                )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"))
+                .andDo(print());
+    }
 }
