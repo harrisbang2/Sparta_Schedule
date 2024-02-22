@@ -2,12 +2,13 @@ package com.sparta.schedules.controllertest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.schedules.config.WebSecurityConfig;
+import com.sparta.schedules.controller.CommentController;
 import com.sparta.schedules.dto.CommentRequestDto;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.CommentService;
-import com.sparta.schedules.service.ScheduleServices;
+import com.sparta.schedules.service.ScheduleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(
-        controllers = {CommentService.class},
+        controllers = {CommentController.class},
         excludeFilters = {
                 @ComponentScan.Filter(
                         type = FilterType.ASSIGNABLE_TYPE,
@@ -46,7 +47,7 @@ public class CommentControllerTest {
     @MockBean
     CommentService Service;
     @MockBean
-    ScheduleServices scheduleServices;
+    ScheduleService scheduleService;
     @Autowired
     public WebApplicationContext context;
     @Autowired
@@ -98,7 +99,7 @@ public class CommentControllerTest {
         this.mockUserSetup();
 
         // when - then
-        this.mvc.perform(get("/api/comment")
+        this.mvc.perform(get("/api/comment/1")
                         .principal(mockPrincipal)
                 )
                 .andExpect(status().is(200))

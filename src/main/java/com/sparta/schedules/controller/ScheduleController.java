@@ -3,7 +3,7 @@ package com.sparta.schedules.controller;
 import com.sparta.schedules.dto.ScheduleRequestDto;
 import com.sparta.schedules.dto.ScheduleResponseDto;
 import com.sparta.schedules.security.UserDetailsImpl;
-import com.sparta.schedules.service.ScheduleServices;
+import com.sparta.schedules.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ScheduleController {
-    private ScheduleServices service;
+    private ScheduleService service;
 
     @Autowired
-    public ScheduleController(ScheduleServices service) {
+    public ScheduleController(ScheduleService service) {
         this.service = service;
     }
 

@@ -3,13 +3,11 @@ package com.sparta.schedules.controllertest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.schedules.config.WebSecurityConfig;
 import com.sparta.schedules.controller.ScheduleController;
-import com.sparta.schedules.controller.UserController;
 import com.sparta.schedules.dto.ScheduleRequestDto;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.security.UserDetailsImpl;
-import com.sparta.schedules.service.ScheduleServices;
-import com.sparta.schedules.service.UserService;
+import com.sparta.schedules.service.ScheduleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
@@ -33,7 +29,6 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(
         controllers = {ScheduleController.class},
@@ -49,7 +44,7 @@ public class ScheduleControllerTest {
     public MockMvc mvc;
     public Principal mockPrincipal;
     @MockBean
-    ScheduleServices scheduleService;
+    ScheduleService scheduleService;
     @Autowired
     public WebApplicationContext context;
     @Autowired
@@ -83,11 +78,11 @@ public class ScheduleControllerTest {
         requestDto.setDate(LocalDate.now());
         requestDto.setContents(contents);
 
-        String postform  = objectMapper.writeValueAsString(requestDto);
+        String platform  = objectMapper.writeValueAsString(requestDto);
 
         // when - then
         this.mvc.perform(post("/api/schedule")
-                        .content(postform)
+                        .content(platform)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .principal(mockPrincipal)
@@ -120,11 +115,11 @@ public class ScheduleControllerTest {
         requestDto.setDate(LocalDate.now());
         requestDto.setContents(contents);
 
-        String postform  = objectMapper.writeValueAsString(requestDto);
+        String platform  = objectMapper.writeValueAsString(requestDto);
 
         // when - then
         this.mvc.perform(put("/api/schedule/1")
-                        .content(postform)
+                        .content(platform)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .principal(mockPrincipal)
