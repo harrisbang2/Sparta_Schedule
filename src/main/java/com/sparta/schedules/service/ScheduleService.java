@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.NoSuchElementException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +54,7 @@ public class ScheduleService {
     @Transactional
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
         //  DB에 존재하는지 확인
-        Schedule sc = findMemo(id);
+        Schedule sc = ScRepository.findById(id).orElseThrow(()-> new NoSuchElementException("해당 일정 찾을수 없습니다."));;
         // 유저 확인.
         if(sc.getUser().getId().equals(user.getId())){
             //  내용 수정
@@ -91,7 +93,7 @@ public class ScheduleService {
         return scr;
     }
     public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
-        List<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
+        Page<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
         List<ScheduleResponseDto> scr = new ArrayList<>();
        for(Schedule sc : sclist){
            scr.add(new ScheduleResponseDto(sc));

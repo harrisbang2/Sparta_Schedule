@@ -10,6 +10,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,5 +37,14 @@ public class UserRepoTest {
     void findUser(){
         User user = userRepository.findById(1L).orElseThrow();
         assertEquals(user.getId(),1L);
+    }
+    @Test
+    @DisplayName("유저 비번 변경")
+    void updateUser(){
+        User user = userRepository.findById(1L).orElseThrow();
+        user.updatePassword("1235123123");
+        User user2 = userRepository.findById(1L).orElseThrow();
+        System.out.println(user2.getPassword());
+        assertEquals(user.getPassword(),user2.getPassword());
     }
 }

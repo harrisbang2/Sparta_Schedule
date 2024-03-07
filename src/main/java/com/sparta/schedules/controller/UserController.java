@@ -2,15 +2,20 @@ package com.sparta.schedules.controller;
 
 import com.sparta.schedules.dto.LoginRequestDto;
 import com.sparta.schedules.dto.SignupRequestDto;
+import com.sparta.schedules.dto.UserRequestDto;
+import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -32,7 +37,7 @@ public class UserController {
     public String signupPage() {
         return "signup";
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @PostMapping("/user/signup")
     public String signup(SignupRequestDto requestDto) {
         userService.signup(requestDto);
@@ -48,7 +53,6 @@ public class UserController {
         }
         return "redirect:/";
     }
-    //////////////////////
     // 로그아웃
     @GetMapping("/logout")
     public String fetchSignoutSite(HttpServletRequest request, HttpServletResponse response) {
@@ -57,5 +61,12 @@ public class UserController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/";
+    }
+
+    // 비번 변경
+    @PatchMapping("/updatepassword")
+    public ResponseEntity<?> upDatePassword(UserRequestDto userRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+            userService.update(userRequestDto,userDetails.getUser());
+            return null;
     }
 }

@@ -29,6 +29,25 @@ public class ScheduleServiceTest {
     @Mock
     ScheduleRepository MockScheduleRepository;
 
+
+    @Test
+    void update(){
+        //given
+        User user = new User("user","user","user@gmail.com", UserRoleEnum.USER);
+        user.setId(1L);
+        ScheduleRequestDto requestDto = new ScheduleRequestDto();
+        requestDto.setContents("테스트용 스케줄 변경 합니다");
+
+        Schedule schedule = new Schedule(requestDto,user);
+        ScheduleService scheduleService = new ScheduleService(MockScheduleRepository);
+
+        //when
+        given(MockScheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
+        Long l = scheduleService.updateSchedule(1L, requestDto, user);
+
+        //then
+        assertEquals(1L,l);
+    }
     @Test
     void create(){
         // given
@@ -55,22 +74,6 @@ public class ScheduleServiceTest {
         ScheduleResponseDto scheduleServicesSchedule= scheduleService.createSchedule(requestDto,user);
         //then
         assertEquals(scheduleServicesSchedule.getContents(),schedule.getContents());
-    }
-    @Test
-    void update(){
-        //given
-        User user = new User("user","user","harrisbang98@gmail.com", UserRoleEnum.USER);
-        user.setId(1L);
-        ScheduleRequestDto requestDto = new ScheduleRequestDto();
-        requestDto.setContents("테스트용 스케줄 변경 합니다");
-        requestDto.setDate(LocalDate.now());
-        Schedule schedule = new Schedule(requestDto,user);
-        ScheduleService scheduleService = new ScheduleService(MockScheduleRepository);
-        //when
-        given(MockScheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-        Long l = scheduleService.updateSchedule(1L, requestDto, user);
-        //then
-        assertEquals(1L,l);
     }
     @Test
     void delete(){

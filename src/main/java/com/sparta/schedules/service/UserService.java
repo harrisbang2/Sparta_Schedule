@@ -2,6 +2,7 @@ package com.sparta.schedules.service;
 
 import com.sparta.schedules.dto.LoginRequestDto;
 import com.sparta.schedules.dto.SignupRequestDto;
+import com.sparta.schedules.dto.UserRequestDto;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.exception.NoSuchUserException;
@@ -9,6 +10,7 @@ import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -78,5 +80,13 @@ import java.util.Optional;
             // JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
             String token = jwtUtil.createToken(user.getUsername(), user.getRole());
             jwtUtil.addJwtToCookie(token, res);
+        }
+
+        @Transactional
+        public void update(UserRequestDto userRequestDto, User user){
+            User updateUser = userRepository.findByUsername(user.getUsername()).orElseThrow(
+                NoSuchUserException::new
+            );
+            updateUser.updatePassword(passwordEncoder.encode(userRequestDto.getPassword()));
         }
     }
