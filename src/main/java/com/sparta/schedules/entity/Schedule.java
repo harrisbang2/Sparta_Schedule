@@ -18,7 +18,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor
-public class Schedule {
+public class Schedule extends TimeStamp{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -31,7 +31,18 @@ public class Schedule {
     @JoinColumn(name = "user_id")
     private User user;
 
+// time stamp
+    @PrePersist
+    public void prePersist() {
+        super.updateModifiedAt();
+        super.updateCreatedAt();
+    }
 
+    @PreUpdate
+    public void PreUpdate() {
+        super.updateModifiedAt();
+    }
+    //
 
     public Schedule(ScheduleRequestDto requestDto, User user) {
         this.contents = requestDto.getContents();

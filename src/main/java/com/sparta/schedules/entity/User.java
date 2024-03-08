@@ -22,7 +22,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "users")
-public class User {
+public class User extends TimeStamp{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -52,6 +52,18 @@ public class User {
         this.email = email;
         this.role= role;
     }
+    //
+    @PrePersist
+    public void prePersist() {
+        super.updateModifiedAt();
+        super.updateCreatedAt();
+    }
+
+    @PreUpdate
+    public void PreUpdate() {
+        super.updateModifiedAt();
+    }
+    //
 
     public User(SignupRequestDto requestDto) {
         this.username = requestDto.getUsername();

@@ -18,7 +18,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @Table(name = "comments")
 @NoArgsConstructor
-public class Comment {
+public class Comment extends TimeStamp{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -36,7 +36,16 @@ public class Comment {
         this.schedule = sc;
         this.user = user;
     }
+    @PrePersist
+    public void prePersist() {
+        super.updateModifiedAt();
+        super.updateCreatedAt();
+    }
 
+    @PreUpdate
+    public void PreUpdate() {
+        super.updateModifiedAt();
+    }
     @Transactional
     public void update(CommentRequestDto requestDto) {
         this.comment = requestDto.getComment();
