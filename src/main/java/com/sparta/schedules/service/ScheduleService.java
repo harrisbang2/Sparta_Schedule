@@ -93,7 +93,7 @@ public class ScheduleService {
         return scr;
     }
     public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
-        Page<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
+        List<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
         List<ScheduleResponseDto> scr = new ArrayList<>();
        for(Schedule sc : sclist){
            scr.add(new ScheduleResponseDto(sc));

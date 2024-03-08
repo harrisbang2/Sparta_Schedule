@@ -37,7 +37,9 @@ public class ScheduleController {
     }
     // 수정 확인
     @PutMapping("/schedule/{id}")
-    public ResponseEntity<?> updateSchedule(@PathVariable(name = "id") Long id, @RequestBody ScheduleRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<?> updateSchedule(@PathVariable(name = "id") Long id,
+        @RequestBody ScheduleRequestDto requestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.updateSchedule(id,requestDto,userDetails.getUser()));
     }

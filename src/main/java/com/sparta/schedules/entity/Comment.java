@@ -11,10 +11,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
-@Setter
+@DynamicUpdate
 @Table(name = "comments")
 @NoArgsConstructor
 public class Comment {
@@ -23,10 +24,10 @@ public class Comment {
     private Long id;
     @Column(name = "comment", nullable = false)
     private String comment;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule")
     private Schedule schedule;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user")
     private User user;
 

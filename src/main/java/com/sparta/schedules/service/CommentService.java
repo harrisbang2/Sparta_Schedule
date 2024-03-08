@@ -7,6 +7,7 @@ import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.repository.CommentRepository;
 import com.sparta.schedules.repository.ScheduleRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class CommentService {
     private final ScheduleRepository scheduleRepository;
 
 // 조회
-    public List<CommentResponseDto> getComments(Long id) {
+    public List<CommentResponseDto> getComments(Long id,User user) {
         Schedule sc = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("그런 스케줄 없음"));
         return commentRepository.findAllBySchedule(sc);
     }
@@ -38,6 +39,7 @@ public class CommentService {
         return res;
     }
     ///// 수정
+    @Transactional
     public Long updateComment(Long id, CommentRequestDto requestDto, User user) {
         // 해당 메모가 DB에 존재하는지 확인
         Comment comment = findSchedule(id);
