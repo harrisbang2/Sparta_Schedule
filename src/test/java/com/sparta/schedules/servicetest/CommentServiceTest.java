@@ -6,6 +6,7 @@ import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.repository.CommentRepository;
+import com.sparta.schedules.repository.CommentRepositoryCustom;
 import com.sparta.schedules.repository.ScheduleRepository;
 import com.sparta.schedules.service.CommentService;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.Optional;

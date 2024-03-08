@@ -1,11 +1,11 @@
 package com.sparta.schedules.repositorytest;
 
+import com.sparta.schedules.dto.CommentRequestDto;
 import com.sparta.schedules.entity.Comment;
 import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
-import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.repository.CommentRepository;
-import com.sparta.schedules.repository.ScheduleRepository;
+import com.sparta.schedules.repository.CommentRepositoryCustom;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,13 +28,13 @@ public class CommentRepositoryTest {
     @Test
     @DisplayName("댓글 테스트")
     void test1(){
-        Comment comment = new Comment();
+        CommentRequestDto commentRequestDto = new CommentRequestDto();
         User user = new User();
         Schedule schedule = new Schedule();
+        commentRequestDto.setComment("asdadasd");
+        commentRequestDto.setSchedule_id(2L);
+        Comment comment = new Comment(commentRequestDto,schedule,user);
 
-        comment.setComment("댓글 생성");
-        comment.setUser(user);
-        comment.setSchedule(schedule);
 
         Comment save = commentRepository.save(comment);
         assertEquals("댓글 생성",save.getComment());

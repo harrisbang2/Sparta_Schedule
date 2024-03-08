@@ -6,10 +6,10 @@ import com.sparta.schedules.entity.Comment;
 import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.repository.CommentRepository;
+import com.sparta.schedules.repository.CommentRepositoryCustom;
 import com.sparta.schedules.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
