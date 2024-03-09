@@ -59,16 +59,16 @@ public class JwtUtil {
                         .compact();
     }
 
-    // JWT Cookie 에 저장
-//    public void addJwtToCookie(String token, HttpServletResponse res) {
-//        token = URLEncoder.encode(token, StandardCharsets.UTF_8).replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
-//
-//        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
-//        cookie.setPath("/");
-//
-//        // Response 객체에 Cookie 추가
-//        res.addCookie(cookie);
-//    }
+     //JWT Cookie 에 저장
+    public void addJwtToCookie(String token, HttpServletResponse res) {
+        token = URLEncoder.encode(token, StandardCharsets.UTF_8).replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
+
+        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
+        cookie.setPath("/");
+
+        // Response 객체에 Cookie 추가
+        res.addCookie(cookie);
+    }
 
     // JWT 토큰 substring
     public String substringToken(String tokenValue) {
