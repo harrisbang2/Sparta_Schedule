@@ -55,7 +55,8 @@ public class CommentController {
     ///
     @PutMapping("/comment/{id}")
     public ResponseEntity<ResponseDto<Long>> updateComment(@PathVariable(name = "id") Long id, @RequestBody CommentRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
             .body(ResponseDto.<Long>builder()
                 .data(service.updateComment(id,requestDto,userDetails.getUser()))
                 .statusCode(201)
@@ -63,7 +64,7 @@ public class CommentController {
     }
     // deleting the item.
     @DeleteMapping("/comment/{id}")
-    public ResponseEntity<?> deleteComment(@PathVariable(name = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<ResponseDto<?>> deleteComment(@PathVariable(name = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(ResponseDto.<Long>builder()
                 .data(service.deleteComment(id,userDetails.getUser()))

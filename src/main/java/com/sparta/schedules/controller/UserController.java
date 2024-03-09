@@ -7,7 +7,7 @@ import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -60,13 +60,19 @@ public class UserController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
+        userService.userLogout(response);
         return "redirect:/";
     }
 
     // 비번 변경
     @PatchMapping("/updatepassword")
-    public ResponseEntity<?> upDatePassword(UserRequestDto userRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-            userService.update(userRequestDto,userDetails.getUser());
-            return null;
+    public ResponseEntity<Boolean> upDatePassword(
+        UserRequestDto userRequestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails)
+    {
+            return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(userService.update(userRequestDto,userDetails.getUser()))
+                ;
     }
 }

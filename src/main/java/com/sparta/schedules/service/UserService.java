@@ -77,16 +77,26 @@ import java.util.Optional;
                 throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
             }
 
-            // JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
-            String token = jwtUtil.createToken(user.getUsername(), user.getRole());
-            jwtUtil.addJwtToCookie(token, res);
+//            // JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
+//            String token = jwtUtil.createToken(user.getUsername(), user.getRole());
+//            jwtUtil.addJwtToCookie(token, res);
+
+            // 유저정보에서 이름값을 가져와서 해당 유저의 권한과 함께 넣어 토큰을 만듬.
+            String token = jwtUtil.createToken(user.getUsername(),user.getRole());
+            res.setHeader(jwtUtil.AUTHORIZATION_HEADER, token);
+        }
+
+        // 로그 아웃
+        public void userLogout(HttpServletResponse httpServletResponse) {
+            httpServletResponse.setHeader("Authorization", null);
         }
 
         @Transactional
-        public void update(UserRequestDto userRequestDto, User user){
+        public boolean update(UserRequestDto userRequestDto, User user){
             User updateUser = userRepository.findByUsername(user.getUsername()).orElseThrow(
                 NoSuchUserException::new
             );
             updateUser.updatePassword(passwordEncoder.encode(userRequestDto.getPassword()));
+            return true;
         }
     }
