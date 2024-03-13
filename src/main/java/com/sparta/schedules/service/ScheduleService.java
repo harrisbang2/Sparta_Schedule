@@ -6,6 +6,7 @@ import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.repository.ScheduleRepository;
 
+import com.sparta.schedules.repository.projectionInterfaces.ScheduleCotentsDateOnly;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +43,15 @@ public class ScheduleService {
     //// get
     public List<ScheduleResponseDto> getSchedule(User user) {
         // DB 조회
-        List<Schedule> sclist = ScRepository.findByUser(user);
+        List<ScheduleCotentsDateOnly> sclist = ScRepository.findByUser(user);
         List<ScheduleResponseDto> scr = new ArrayList<>();
-        for(Schedule sc : sclist){
+        System.out.println(sclist.get(0).getDate());
+        for(ScheduleCotentsDateOnly sc : sclist){
             scr.add(new ScheduleResponseDto(sc));
         }
         return scr;
     }
     ////update
-
     @Transactional
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
         //  DB에 존재하는지 확인
@@ -67,7 +68,7 @@ public class ScheduleService {
     }
 
     ////delete
-
+    @Transactional
     public Long deleteSchedule(Long id, User user) {
         // 해당 DB에 존재하는지 확인
         Schedule sc = findMemo(id);
