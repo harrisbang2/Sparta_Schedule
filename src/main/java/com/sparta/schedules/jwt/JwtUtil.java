@@ -67,7 +67,8 @@ public class JwtUtil {
         cookie.setPath("/");
 
         // Response 객체에 Cookie 추가
-        res.addCookie(cookie);
+        res.addHeader(AUTHORIZATION_HEADER,token);
+        //res.addCookie(cookie);
     }
 
     // JWT 토큰 substring
