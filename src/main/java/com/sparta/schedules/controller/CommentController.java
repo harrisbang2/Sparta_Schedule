@@ -3,7 +3,6 @@ package com.sparta.schedules.controller;
 import com.sparta.schedules.dto.CommentRequestDto;
 import com.sparta.schedules.dto.CommentResponseDto;
 import com.sparta.schedules.dto.ResponseDto;
-import com.sparta.schedules.entity.Comment;
 import com.sparta.schedules.repository.projectionInterface.CommentList;
 import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.CommentService;

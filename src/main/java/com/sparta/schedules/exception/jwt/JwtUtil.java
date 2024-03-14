@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -29,10 +28,8 @@ public class JwtUtil {
     public static final String AUTHORIZATION_KEY = "auth";
     // Token 식별자
     public static final String BEARER_PREFIX = "Bearer ";
-    // 토큰 만료시간
-    private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
 
-    @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
+  @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
     private String secretKey;
     private Key key;
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -49,7 +46,10 @@ public class JwtUtil {
     // 토큰 생성
     public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
-        return BEARER_PREFIX +
+      // 토큰 만료시간
+      // 60분
+      long TOKEN_TIME = 60 * 60 * 1000L;
+      return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username) // 사용자 식별자값(ID)
                         .claim(AUTHORIZATION_KEY, role) // 사용자 권한
@@ -108,9 +108,9 @@ public class JwtUtil {
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals(AUTHORIZATION_HEADER)){
                     try{
-                    return URLDecoder.decode(cookie.getValue(),"UTF-8");
+                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
                     }
-                    catch (Exception e){
+                    catch (Exception ignored){
 
                     }
                 }

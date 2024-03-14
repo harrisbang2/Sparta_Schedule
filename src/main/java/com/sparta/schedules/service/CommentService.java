@@ -6,7 +6,7 @@ import com.sparta.schedules.entity.Comment;
 import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.repository.CommentRepository;
-import com.sparta.schedules.repository.CommentRepositoryCustom;
+
 import com.sparta.schedules.repository.ScheduleRepository;
 import com.sparta.schedules.repository.projectionInterface.CommentList;
 import jakarta.transaction.Transactional;
@@ -36,8 +36,7 @@ public class CommentService {
         /// 저장.
         Comment savecomment = commentRepository.save(comment);
         /// ResponseDto 만들기.
-        CommentResponseDto res = new CommentResponseDto(savecomment);
-        return res;
+      return new CommentResponseDto(savecomment);
     }
     ///// 수정
     @Transactional
@@ -74,8 +73,7 @@ public class CommentService {
     //
     private Comment findSchedule(Long id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("그런 스케줄 없음"));
-        Comment comment = commentRepository.findBySchedule(schedule);
-        return comment;
+      return commentRepository.findBySchedule(schedule);
     }
 }
 

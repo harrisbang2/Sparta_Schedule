@@ -1,6 +1,4 @@
 package com.sparta.schedules.repository;
-
-import com.sparta.schedules.dto.CommentResponseDto;
 import com.sparta.schedules.entity.Comment;
 import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.repository.projectionInterface.CommentList;

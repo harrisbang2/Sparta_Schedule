@@ -31,10 +31,7 @@ import java.util.Optional;
             this.jwtUtil = jwtUtil;
         }
 
-        // ADMIN_TOKEN
-        private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
-
-        public void signup(SignupRequestDto requestDto) {
+      public void signup(SignupRequestDto requestDto) {
             String username = requestDto.getUsername();
             String password = passwordEncoder.encode(requestDto.getPassword());
 
@@ -54,7 +51,9 @@ import java.util.Optional;
             // 사용자 ROLE 확인
             UserRoleEnum role = UserRoleEnum.USER;
             if (requestDto.isAdmin()) {
-                if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
+              // ADMIN_TOKEN
+              String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
+              if (!ADMIN_TOKEN.equals(requestDto.getAdminToken())) {
                     throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
                 }
                 role = UserRoleEnum.ADMIN;
@@ -85,8 +84,8 @@ import java.util.Optional;
 
             // 유저정보에서 이름값을 가져와서 해당 유저의 권한과 함께 넣어 토큰을 만듬.
             String token = jwtUtil.createToken(user.getUsername(),user.getRole());
-            res.addCookie(new Cookie(jwtUtil.AUTHORIZATION_HEADER,token));
-            res.setHeader(jwtUtil.AUTHORIZATION_HEADER, token);
+            res.addCookie(new Cookie(JwtUtil.AUTHORIZATION_HEADER,token));
+            res.setHeader(JwtUtil.AUTHORIZATION_HEADER, token);
         }
 
         // 로그 아웃

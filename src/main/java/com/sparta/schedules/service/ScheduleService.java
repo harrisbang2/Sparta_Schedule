@@ -54,7 +54,7 @@ public class ScheduleService {
     @Transactional
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
         //  DB에 존재하는지 확인
-        Schedule sc = ScRepository.findById(id).orElseThrow(()-> new NoSuchElementException("해당 일정 찾을수 없습니다."));;
+        Schedule sc = ScRepository.findById(id).orElseThrow(()-> new NoSuchElementException("해당 일정 찾을수 없습니다."));
         // 유저 확인.
         if(sc.getUser().getId().equals(user.getId())){
             //  내용 수정
@@ -89,8 +89,7 @@ public class ScheduleService {
     // 검색 //// Find by ID + user
     public ScheduleResponseDto searchMemo(Long id, User user) {
         Schedule sc = ScRepository.findByIdAndUser(id,user);
-        ScheduleResponseDto scr = new ScheduleResponseDto(sc);
-        return scr;
+      return new ScheduleResponseDto(sc);
     }
     public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
         List<ScheduleCotentsDateOnly> sclist = ScRepository.findAllByDateAndUser(id,user);

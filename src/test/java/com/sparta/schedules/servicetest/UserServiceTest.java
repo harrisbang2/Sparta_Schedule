@@ -28,7 +28,6 @@ public class UserServiceTest {
      PasswordEncoder passwordEncoder;
     @Mock
      UserRepository loginRepo;
-     private final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
     @Mock
     HttpServletResponse response;
     @Mock
@@ -45,6 +44,7 @@ public class UserServiceTest {
         requestDto.setUsername("usertest");
         requestDto.setPassword("password");
         requestDto.setEmail("harrisbang98@gmail.com");
+
 
         //when
         UserService userService = new UserService(loginRepo,passwordEncoder,jwtUtil);
