@@ -1,4 +1,4 @@
-package com.sparta.schedules.jwt;
+package com.sparta.schedules.exception.jwt;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;

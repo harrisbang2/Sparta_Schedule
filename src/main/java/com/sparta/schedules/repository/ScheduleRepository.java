@@ -13,5 +13,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
 
     @Query("select t from Schedule t join fetch t.user")
     Schedule findByIdAndUser(Long id, User user);
+
     List<ScheduleCotentsDateOnly> findByUser(User user);
 }

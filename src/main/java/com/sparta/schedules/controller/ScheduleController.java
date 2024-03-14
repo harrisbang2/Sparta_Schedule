@@ -1,5 +1,6 @@
 package com.sparta.schedules.controller;
 
+import com.sparta.schedules.dto.ResponseDto;
 import com.sparta.schedules.dto.ScheduleRequestDto;
 import com.sparta.schedules.dto.ScheduleResponseDto;
 import com.sparta.schedules.security.UserDetailsImpl;
@@ -26,14 +27,24 @@ public class ScheduleController {
     }
 
     @PostMapping("/schedule")
-    public ResponseEntity<?> CreateDailySchedule(@RequestBody ScheduleRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<ResponseDto<?>> CreateDailySchedule(
+        @RequestBody ScheduleRequestDto requestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
        return ResponseEntity.status(HttpStatus.CREATED)
-               .body(service.createSchedule(requestDto,userDetails.getUser()));
+               .body(ResponseDto.
+                   <ScheduleResponseDto>builder()
+                   .data(service.createSchedule(requestDto,userDetails.getUser()))
+                   .statusCode(201)
+                   .build());
     }
     // 가저오기
     @GetMapping("/schedule")
-    public List<ScheduleResponseDto> DisplayAllDaily(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return service.getSchedule(userDetails.getUser());
+    public ResponseEntity<List<ScheduleResponseDto>> DisplayAllDaily(
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity
+            .status(HttpStatus.OK)
+                .body(service.getSchedule(userDetails.getUser()));
+
     }
     // 수정 확인
     @PutMapping("/schedule/{id}")

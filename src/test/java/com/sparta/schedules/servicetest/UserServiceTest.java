@@ -3,8 +3,7 @@ package com.sparta.schedules.servicetest;
 import com.sparta.schedules.dto.LoginRequestDto;
 import com.sparta.schedules.dto.SignupRequestDto;
 import com.sparta.schedules.entity.User;
-import org.mockito.MockedStatic;
-import com.sparta.schedules.jwt.JwtUtil;
+import com.sparta.schedules.exception.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
 import com.sparta.schedules.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,9 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -22,7 +19,6 @@ import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 
 @SpringBootTest

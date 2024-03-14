@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.sparta.schedules.jwt.JwtAuthorizationFilter;
-import com.sparta.schedules.jwt.JwtAuthenticationFilter;
-import com.sparta.schedules.jwt.JwtUtil;
+import com.sparta.schedules.exception.jwt.JwtAuthorizationFilter;
+import com.sparta.schedules.exception.jwt.JwtAuthenticationFilter;
+import com.sparta.schedules.exception.jwt.JwtUtil;
 import com.sparta.schedules.security.UserDetailsServiceImpl;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;

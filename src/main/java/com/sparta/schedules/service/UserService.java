@@ -6,7 +6,7 @@ import com.sparta.schedules.dto.UserRequestDto;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.exception.NoSuchUserException;
-import com.sparta.schedules.jwt.JwtUtil;
+import com.sparta.schedules.exception.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
 import com.sparta.schedules.repository.projectionInterface.UserProfile;
 import jakarta.servlet.http.Cookie;

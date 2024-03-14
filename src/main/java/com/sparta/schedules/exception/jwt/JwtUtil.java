@@ -1,4 +1,4 @@
-package com.sparta.schedules.jwt;
+package com.sparta.schedules.exception.jwt;
 
 import com.sparta.schedules.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
@@ -68,7 +68,7 @@ public class JwtUtil {
 
         // Response 객체에 Cookie 추가
         res.addHeader(AUTHORIZATION_HEADER,token);
-        //res.addCookie(cookie);
+        res.addCookie(cookie);
     }
 
     // JWT 토큰 substring

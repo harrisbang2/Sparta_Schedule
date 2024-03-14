@@ -4,6 +4,7 @@ import com.sparta.schedules.dto.CommentRequestDto;
 import com.sparta.schedules.dto.CommentResponseDto;
 import com.sparta.schedules.dto.ResponseDto;
 import com.sparta.schedules.entity.Comment;
+import com.sparta.schedules.repository.projectionInterface.CommentList;
 import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -42,19 +43,20 @@ public class CommentController {
 
     /// get comments
     @GetMapping("/comment/{id}")
-    public ResponseEntity<ResponseDto<List<CommentResponseDto>>> getCommentsBySchedule(
-        @PathVariable(value = "id") Long id,
-        @AuthenticationPrincipal UserDetailsImpl userDetails
+    public ResponseEntity<ResponseDto<List<CommentList>>> getCommentsBySchedule(
+        @PathVariable(value = "id") Long id
     ){
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(ResponseDto.<List<CommentResponseDto>>builder()
-                .data(service.getComments(id,userDetails.getUser()))
+            .body(ResponseDto.<List<CommentList>>builder()
+                .data(service.getComments(id))
                 .statusCode(200)
                 .build());
     }
     ///
     @PutMapping("/comment/{id}")
-    public ResponseEntity<ResponseDto<Long>> updateComment(@PathVariable(name = "id") Long id, @RequestBody CommentRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<ResponseDto<Long>> updateComment(
+        @PathVariable(name = "id") Long id,
+        @RequestBody CommentRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(ResponseDto.<Long>builder()
