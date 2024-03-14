@@ -6,13 +6,12 @@ import com.sparta.schedules.entity.Schedule;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.repository.ScheduleRepository;
 
-import com.sparta.schedules.repository.projectionInterfaces.ScheduleCotentsDateOnly;
+import com.sparta.schedules.repository.projectionInterface.ScheduleCotentsDateOnly;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import java.util.NoSuchElementException;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,9 +93,9 @@ public class ScheduleService {
         return scr;
     }
     public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
-        List<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
+        List<ScheduleCotentsDateOnly> sclist = ScRepository.findAllByDateAndUser(id,user);
         List<ScheduleResponseDto> scr = new ArrayList<>();
-       for(Schedule sc : sclist){
+       for(ScheduleCotentsDateOnly sc : sclist){
            scr.add(new ScheduleResponseDto(sc));
        }
         return scr;

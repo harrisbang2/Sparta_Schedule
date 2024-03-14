@@ -1,7 +1,7 @@
 package com.sparta.schedules.dto;
 
 import com.sparta.schedules.entity.Schedule;
-import com.sparta.schedules.repository.projectionInterfaces.ScheduleCotentsDateOnly;
+import com.sparta.schedules.repository.projectionInterface.ScheduleCotentsDateOnly;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
