@@ -8,6 +8,7 @@ import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.exception.NoSuchUserException;
 import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
+import com.sparta.schedules.repository.projectionInterface.UserProfile;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,7 +46,7 @@ import java.util.Optional;
 
             // email 중복확인
             String email = requestDto.getEmail();
-            Optional<User> checkEmail = userRepository.findByEmail(email);
+            Optional<UserProfile> checkEmail = userRepository.findByEmail(email);
             if (checkEmail.isPresent()) {
                 throw new IllegalArgumentException("중복된 Email 입니다.");
             }
