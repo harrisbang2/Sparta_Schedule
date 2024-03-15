@@ -55,7 +55,8 @@ public class CommentController {
     @PutMapping("/comment/{id}")
     public ResponseEntity<ResponseDto<Long>> updateComment(
         @PathVariable(name = "id") Long id,
-        @RequestBody CommentRequestDto requestDto,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        @RequestBody CommentRequestDto requestDto,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(ResponseDto.<Long>builder()

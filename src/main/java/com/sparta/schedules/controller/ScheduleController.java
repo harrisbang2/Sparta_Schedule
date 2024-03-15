@@ -28,7 +28,7 @@ public class ScheduleController {
     }
 
     @PostMapping("/schedule")
-    public ResponseEntity<ResponseDto<?>> CreateDailySchedule(
+    public ResponseEntity<ResponseDto<ScheduleResponseDto>> CreateDailySchedule(
         @RequestBody ScheduleRequestDto requestDto,
         HttpServletRequest request) {
        return ResponseEntity.status(HttpStatus.CREATED)
@@ -40,42 +40,73 @@ public class ScheduleController {
     }
     // 가저오기
     @GetMapping("/schedule")
-    public ResponseEntity<List<ScheduleResponseDto>> DisplayAllDaily(
+    public ResponseEntity<ResponseDto<List<ScheduleResponseDto>>> DisplayAllDaily(
         HttpServletRequest request) {
         return ResponseEntity
             .status(HttpStatus.OK)
-                .body(service.getSchedule(request.getHeader(AUTHORIZATION_HEADER)));
+                .body(ResponseDto.
+                    <List<ScheduleResponseDto>>builder()
+                    .data(service.getSchedule(request.getHeader(AUTHORIZATION_HEADER)))
+                    .statusCode(200)
+                    .build())
+            ;
 
     }
     // 수정 확인
     @PutMapping("/schedule/{id}")
-    public ResponseEntity<?> updateSchedule(@PathVariable(name = "id") Long id,
+    public ResponseEntity<ResponseDto<Long>> updateSchedule(@PathVariable(name = "id") Long id,
         @RequestBody ScheduleRequestDto requestDto,
         HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.updateSchedule(id,requestDto,request.getHeader(AUTHORIZATION_HEADER)));
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(ResponseDto.
+                <Long>builder()
+                .data(service.updateSchedule(id,requestDto,request.getHeader(AUTHORIZATION_HEADER)))
+                .statusCode(200)
+                .build())
+            ;
     }
     // deleting the item.
     @DeleteMapping("/schedule/{id}")
-    public ResponseEntity<?> deleteDailySchedule(
+    public ResponseEntity<ResponseDto<Long>> deleteDailySchedule(
         @PathVariable(name = "id") Long id,
         HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.deleteSchedule(id,request.getHeader(AUTHORIZATION_HEADER)));
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(ResponseDto.
+                <Long>builder()
+                .data(service.deleteSchedule(id,request.getHeader(AUTHORIZATION_HEADER)))
+                .statusCode(200)
+                .build())
+            ;
+
     }
     // searching
     @GetMapping("/schedule/search/{id}")
-    public ResponseEntity<?> searchDailySchedule(
+    public ResponseEntity<ResponseDto<ScheduleResponseDto>> searchDailySchedule(
         @PathVariable(name = "id") Long id,
         HttpServletRequest request){
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.searchMemo(id,request.getHeader(AUTHORIZATION_HEADER)));
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(ResponseDto.
+                <ScheduleResponseDto>builder()
+                .data(service.searchMemo(id,request.getHeader(AUTHORIZATION_HEADER)))
+                .statusCode(200)
+                .build())
+            ;
     }
     // searching by date
     @GetMapping("/schedule/search/date/{date}")
-    public List<ScheduleResponseDto> searchByDate(
+    public ResponseEntity<ResponseDto<List<ScheduleResponseDto>>> searchByDate(
         @PathVariable(name="date") LocalDate date,
         HttpServletRequest request){
-       return service.searchMemoDate(date,request.getHeader(AUTHORIZATION_HEADER));
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(ResponseDto.
+                <List<ScheduleResponseDto>>builder()
+                .data(service.searchMemoDate(date,request.getHeader(AUTHORIZATION_HEADER)))
+                .statusCode(200)
+                .build())
+            ;
     }
 }
