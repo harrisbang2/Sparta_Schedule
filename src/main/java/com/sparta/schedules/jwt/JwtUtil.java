@@ -4,7 +4,6 @@ import com.sparta.schedules.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -25,7 +24,7 @@ public class JwtUtil {
     // Header KEY 값
     public static final String AUTHORIZATION_HEADER = "Authorization";
     // 사용자 권한 값의 KEY
-    public static final String AUTHORIZATION_KEY = "auth";
+//    public static final String AUTHORIZATION_KEY = "auth";
     // Token 식별자
     public static final String BEARER_PREFIX = "Bearer ";
 
@@ -66,13 +65,12 @@ public class JwtUtil {
      //JWT Cookie 에 저장
     public void addJwtToHeader(String token, HttpServletResponse res) {
         token = URLEncoder.encode(token, StandardCharsets.UTF_8).replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
-
-        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
-        cookie.setPath("/");
-
-        // Response 객체에 Cookie 추가
         res.addHeader(AUTHORIZATION_HEADER,token);
-        res.addCookie(cookie);
+
+      // Response 객체에 Cookie 추가
+//        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
+//        cookie.setPath("/");
+//        res.addCookie(cookie);
     }
 
     // JWT 토큰 substring
@@ -107,23 +105,24 @@ public class JwtUtil {
     }
 
     public String getTokenFromRequest(HttpServletRequest req) {
-        Cookie[] cookies = req.getCookies();
-        String auth = req.getHeader(AUTHORIZATION_HEADER);
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals(AUTHORIZATION_HEADER)){
-                    try{
-                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
-                    }
-                    catch (Exception ignored){
-                    }
-                }
-            }
-        }
-
-        if(auth!=null){
-          return URLDecoder.decode(auth, StandardCharsets.UTF_8);
-        }
+      String auth = req.getHeader(AUTHORIZATION_HEADER);
+      if(auth!=null){
+        return URLDecoder.decode(auth, StandardCharsets.UTF_8);
+      }
+      /// 하지만 쿠키가 있다면?
+//      Cookie[] cookies = req.getCookies();
+//        if(cookies != null){
+//            for(Cookie cookie : cookies){
+//                if(cookie.getName().equals(AUTHORIZATION_HEADER)){
+//                    try{
+//                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
+//                    }
+//                    catch (Exception ignored){
+//                    }
+//                }
+//            }
+//        }
+//
         return null;
     }
 }
