@@ -3,6 +3,7 @@ package com.sparta.schedules.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.schedules.dto.LoginRequestDto;
+import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.security.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
@@ -47,9 +48,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
         log.info("로그인 성공 및 JWT 생성");
-        String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
-        UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
-        String token = jwtUtil.createToken(username, role);
+        User user = ((UserDetailsImpl) authResult.getPrincipal()).getUser();
+        String token = jwtUtil.createToken(user.getId(),user.getUsername(),user.getRole());
 
         jwtUtil.addJwtToHeader(token,response);
     }

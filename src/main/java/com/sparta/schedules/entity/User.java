@@ -52,6 +52,10 @@ public class User extends TimeStamp{
         this.email = email;
         this.role= role;
     }
+    @Builder
+    public User(Long id){
+        this.id = id;
+    }
     //
     @PrePersist
     public void prePersist() {

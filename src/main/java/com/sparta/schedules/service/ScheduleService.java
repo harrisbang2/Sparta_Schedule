@@ -7,6 +7,9 @@ import com.sparta.schedules.entity.User;
 import com.sparta.schedules.repository.ScheduleRepository;
 
 import com.sparta.schedules.repository.projectionInterface.ScheduleCotentsDateOnly;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ScheduleService {
-
     private final ScheduleRepository ScRepository;
     public ScheduleService(ScheduleRepository ScRepository) {
         this.ScRepository = ScRepository;
-    }
 
+    }
     //// create
-    //// create
-    //// create
-    public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto, User user) {
+    public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto, String token) {
+        User user = makeMockUser(token);
         // RequestDto -> Entity
         Schedule sc = new Schedule(requestDto,user);
 
@@ -39,11 +40,12 @@ public class ScheduleService {
 
     //// get
 
-    public List<ScheduleResponseDto> getSchedule(User user) {
+    public List<ScheduleResponseDto> getSchedule(String token) {
+        User user = makeMockUser(token);
         // DB 조회
         List<ScheduleCotentsDateOnly> sclist = ScRepository.findByUser(user);
         List<ScheduleResponseDto> scr = new ArrayList<>();
-
+//
         for(ScheduleCotentsDateOnly sc : sclist){
             scr.add(new ScheduleResponseDto(sc));
         }
@@ -51,7 +53,8 @@ public class ScheduleService {
     }
     ////update
     @Transactional
-    public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
+    public Long updateSchedule(Long id, ScheduleRequestDto requestDto, String token) {
+        User user = makeMockUser(token);
         //  DB에 존재하는지 확인
         Schedule sc = ScRepository.findById(id).orElseThrow(()-> new NoSuchElementException("해당 일정 찾을수 없습니다."));
         // 유저 확인.
@@ -67,7 +70,8 @@ public class ScheduleService {
 
     ////delete
     @Transactional
-    public Long deleteSchedule(Long id, User user) {
+    public Long deleteSchedule(Long id, String token) {
+        User user = makeMockUser(token);
         // 해당 DB에 존재하는지 확인
         Schedule sc = findMemo(id);
         // 유저 확인.
@@ -86,16 +90,37 @@ public class ScheduleService {
     }
 
     // 검색 //// Find by ID + user
-    public ScheduleResponseDto searchMemo(Long id, User user) {
+    public ScheduleResponseDto searchMemo(Long id, String token) {
+        User user = makeMockUser(token);
         Schedule sc = ScRepository.findByIdAndUser(id,user);
       return new ScheduleResponseDto(sc);
     }
-    public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
+    public List<ScheduleResponseDto> searchMemoDate(LocalDate id, String token) {
+        User user = makeMockUser(token);
         List<ScheduleCotentsDateOnly> sclist = ScRepository.findAllByDateAndUser(id,user);
         List<ScheduleResponseDto> scr = new ArrayList<>();
        for(ScheduleCotentsDateOnly sc : sclist){
            scr.add(new ScheduleResponseDto(sc));
        }
         return scr;
+    }
+
+
+
+    /*
+    *
+    *
+    *
+     */
+    private  User makeMockUser(String token){
+        token = token.substring(9);
+
+        JwtParser jwtParser = Jwts.parserBuilder()
+            .setSigningKey("7Iqk7YyM66W07YOA7L2U65Sp7YG065+9U3ByaW5n6rCV7J2Y7Yqc7YSw7LWc7JuQ67mI7J6F64uI64ukLg==")
+            .build();
+        Claims claims = jwtParser
+            .parseClaimsJws(token)
+            .getBody();
+        return new User((long)(int) claims.get("userId"));
     }
 }

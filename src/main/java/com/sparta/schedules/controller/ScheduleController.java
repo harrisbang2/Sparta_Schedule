@@ -5,6 +5,7 @@ import com.sparta.schedules.dto.ScheduleRequestDto;
 import com.sparta.schedules.dto.ScheduleResponseDto;
 import com.sparta.schedules.security.UserDetailsImpl;
 import com.sparta.schedules.service.ScheduleService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class ScheduleController {
     private ScheduleService service;
-
+    public static final String AUTHORIZATION_HEADER = "Authorization";
     @Autowired
     public ScheduleController(ScheduleService service) {
         this.service = service;
@@ -29,46 +30,52 @@ public class ScheduleController {
     @PostMapping("/schedule")
     public ResponseEntity<ResponseDto<?>> CreateDailySchedule(
         @RequestBody ScheduleRequestDto requestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        HttpServletRequest request) {
        return ResponseEntity.status(HttpStatus.CREATED)
                .body(ResponseDto.
                    <ScheduleResponseDto>builder()
-                   .data(service.createSchedule(requestDto,userDetails.getUser()))
+                   .data(service.createSchedule(requestDto,request.getHeader(AUTHORIZATION_HEADER)))
                    .statusCode(201)
                    .build());
     }
     // 가저오기
     @GetMapping("/schedule")
     public ResponseEntity<List<ScheduleResponseDto>> DisplayAllDaily(
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        HttpServletRequest request) {
         return ResponseEntity
             .status(HttpStatus.OK)
-                .body(service.getSchedule(userDetails.getUser()));
+                .body(service.getSchedule(request.getHeader(AUTHORIZATION_HEADER)));
 
     }
     // 수정 확인
     @PutMapping("/schedule/{id}")
     public ResponseEntity<?> updateSchedule(@PathVariable(name = "id") Long id,
         @RequestBody ScheduleRequestDto requestDto,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.updateSchedule(id,requestDto,userDetails.getUser()));
+                .body(service.updateSchedule(id,requestDto,request.getHeader(AUTHORIZATION_HEADER)));
     }
     // deleting the item.
     @DeleteMapping("/schedule/{id}")
-    public ResponseEntity<?> deleteDailySchedule(@PathVariable(name = "id") Long id,@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<?> deleteDailySchedule(
+        @PathVariable(name = "id") Long id,
+        HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.deleteSchedule(id,userDetails.getUser()));
+                .body(service.deleteSchedule(id,request.getHeader(AUTHORIZATION_HEADER)));
     }
     // searching
     @GetMapping("/schedule/search/{id}")
-    public ResponseEntity<?> searchDailySchedule(@PathVariable(name = "id") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseEntity<?> searchDailySchedule(
+        @PathVariable(name = "id") Long id,
+        HttpServletRequest request){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.searchMemo(id,userDetails.getUser()));
+                .body(service.searchMemo(id,request.getHeader(AUTHORIZATION_HEADER)));
     }
     // searching by date
     @GetMapping("/schedule/search/date/{date}")
-    public List<ScheduleResponseDto> searchByDate(@PathVariable(name="date") LocalDate date,@AuthenticationPrincipal UserDetailsImpl userDetails){
-       return service.searchMemoDate(date,userDetails.getUser());
+    public List<ScheduleResponseDto> searchByDate(
+        @PathVariable(name="date") LocalDate date,
+        HttpServletRequest request){
+       return service.searchMemoDate(date,request.getHeader(AUTHORIZATION_HEADER));
     }
 }

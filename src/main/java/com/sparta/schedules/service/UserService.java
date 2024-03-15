@@ -83,7 +83,7 @@ import java.util.Optional;
 //            jwtUtil.addJwtToCookie(token, res);
 
             // 유저정보에서 이름값을 가져와서 해당 유저의 권한과 함께 넣어 토큰을 만듬.
-            String token = jwtUtil.createToken(user.getUsername(),user.getRole());
+            String token = jwtUtil.createToken(user.getId(),user.getUsername(),user.getRole());
 //            res.addCookie(new Cookie(JwtUtil.AUTHORIZATION_HEADER,token));
             res.setHeader(JwtUtil.AUTHORIZATION_HEADER, token);
         }

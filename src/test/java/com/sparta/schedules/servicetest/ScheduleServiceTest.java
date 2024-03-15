@@ -29,6 +29,8 @@ public class ScheduleServiceTest {
     @Mock
     ScheduleRepository MockScheduleRepository;
 
+    String token = "Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwidXNlcklkIjoxLCJ1c2VyIjoidXNlciIsInJvbGUiOiJVU0VSIn0.g0V1moIiRTfbXobxWJFj2Z0Xmn46F8GU0RpKH9yn8M8";
+
 
     @Test
     void update(){
@@ -43,7 +45,7 @@ public class ScheduleServiceTest {
 
         //when
         given(MockScheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-        Long l = scheduleService.updateSchedule(1L, requestDto, user);
+        Long l = scheduleService.updateSchedule(1L, requestDto, "Bearer%20eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwidXNlcklkIjoxLCJ1c2VyIjoidXNlciIsInJvbGUiOiJVU0VSIn0.g0V1moIiRTfbXobxWJFj2Z0Xmn46F8GU0RpKH9yn8M8");
 
         //then
         assertEquals(1L,l);
@@ -71,7 +73,7 @@ public class ScheduleServiceTest {
         //when
 
         when(MockScheduleRepository.save(any())).thenReturn(schedule);
-        ScheduleResponseDto scheduleServicesSchedule= scheduleService.createSchedule(requestDto,user);
+        ScheduleResponseDto scheduleServicesSchedule= scheduleService.createSchedule(requestDto,token);
         //then
         assertEquals(scheduleServicesSchedule.getContents(),schedule.getContents());
     }
@@ -86,7 +88,7 @@ public class ScheduleServiceTest {
         ScheduleService scheduleService = new ScheduleService(MockScheduleRepository);
         //when
         given(MockScheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-        Long l = scheduleService.deleteSchedule(1L, user);
+        Long l = scheduleService.deleteSchedule(1L, token);
         //then
         assertEquals(1L,l);
     }
