@@ -38,13 +38,12 @@ public class ScheduleService {
     }
 
     //// get
-    //// get
-    //// get
+
     public List<ScheduleResponseDto> getSchedule(User user) {
         // DB 조회
         List<ScheduleCotentsDateOnly> sclist = ScRepository.findByUser(user);
         List<ScheduleResponseDto> scr = new ArrayList<>();
-        System.out.println(sclist.get(0).getDate());
+
         for(ScheduleCotentsDateOnly sc : sclist){
             scr.add(new ScheduleResponseDto(sc));
         }

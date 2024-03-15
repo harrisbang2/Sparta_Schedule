@@ -1,6 +1,5 @@
 package com.sparta.schedules.jwt;
 
-import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -64,11 +63,11 @@ public class JwtUtil {
     }
 
      //JWT Cookie 에 저장
-    public void addJwtToCookie(String token, HttpServletResponse res) {
+    public void addJwtToHeader(String token, HttpServletResponse res) {
         token = URLEncoder.encode(token, StandardCharsets.UTF_8).replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
 
-        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
-        cookie.setPath("/");
+//        Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
+//        cookie.setPath("/");
 
         // Response 객체에 Cookie 추가
         res.addHeader(AUTHORIZATION_HEADER,token);
@@ -121,7 +120,7 @@ public class JwtUtil {
 //            }
 //        }
         //
-        if(auth.length()>1){
+        if(auth!=null){
           return URLDecoder.decode(auth, StandardCharsets.UTF_8);
         }
         return null;

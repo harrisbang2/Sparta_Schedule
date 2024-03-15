@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
         String token = jwtUtil.createToken(username, role);
 
-        jwtUtil.addJwtToCookie(token,response);
+        jwtUtil.addJwtToHeader(token,response);
     }
 
     @Override
