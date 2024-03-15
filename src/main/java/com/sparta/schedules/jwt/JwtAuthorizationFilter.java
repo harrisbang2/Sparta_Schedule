@@ -1,4 +1,4 @@
-package com.sparta.schedules.exception.jwt;
+package com.sparta.schedules.jwt;
 
 import com.sparta.schedules.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;

@@ -1,5 +1,6 @@
-package com.sparta.schedules.exception.jwt;
+package com.sparta.schedules.jwt;
 
+import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -49,13 +50,16 @@ public class JwtUtil {
       // 토큰 만료시간
       // 60분
       long TOKEN_TIME = 60 * 60 * 1000L;
+      Claims claims = Jwts.claims().setSubject("user");
+      claims.put("user",username);
+      claims.put("role", role);
+
       return BEARER_PREFIX +
                 Jwts.builder()
-                        .setSubject(username) // 사용자 식별자값(ID)
-                        .claim(AUTHORIZATION_KEY, role) // 사용자 권한
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 만료 시간
                         .setIssuedAt(date) // 발급일
                         .signWith(key, signatureAlgorithm) // 암호화 알고리즘
+                         .setClaims(claims)
                         .compact();
     }
 
@@ -68,7 +72,7 @@ public class JwtUtil {
 
         // Response 객체에 Cookie 추가
         res.addHeader(AUTHORIZATION_HEADER,token);
-        res.addCookie(cookie);
+        //res.addCookie(cookie);
     }
 
     // JWT 토큰 substring
@@ -103,18 +107,22 @@ public class JwtUtil {
     }
 
     public String getTokenFromRequest(HttpServletRequest req) {
-        Cookie[] cookies = req.getCookies();
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals(AUTHORIZATION_HEADER)){
-                    try{
-                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
-                    }
-                    catch (Exception ignored){
-
-                    }
-                }
-            }
+//        Cookie[] cookies = req.getCookies();
+        String auth = req.getHeader(AUTHORIZATION_HEADER);
+//        if(cookies != null){
+//            for(Cookie cookie : cookies){
+//                if(cookie.getName().equals(AUTHORIZATION_HEADER)){
+//                    try{
+//                    return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
+//                    }
+//                    catch (Exception ignored){
+//                    }
+//                }
+//            }
+//        }
+        //
+        if(auth.length()>1){
+          return URLDecoder.decode(auth, StandardCharsets.UTF_8);
         }
         return null;
     }

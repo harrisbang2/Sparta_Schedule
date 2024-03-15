@@ -3,7 +3,7 @@ package com.sparta.schedules.servicetest;
 import com.sparta.schedules.dto.LoginRequestDto;
 import com.sparta.schedules.dto.SignupRequestDto;
 import com.sparta.schedules.entity.User;
-import com.sparta.schedules.exception.jwt.JwtUtil;
+import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
 import com.sparta.schedules.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;

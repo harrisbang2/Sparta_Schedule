@@ -6,7 +6,7 @@ import com.sparta.schedules.dto.UserRequestDto;
 import com.sparta.schedules.entity.User;
 import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.exception.NoSuchUserException;
-import com.sparta.schedules.exception.jwt.JwtUtil;
+import com.sparta.schedules.jwt.JwtUtil;
 import com.sparta.schedules.repository.UserRepository;
 import com.sparta.schedules.repository.projectionInterface.UserProfile;
 import jakarta.servlet.http.Cookie;
@@ -84,7 +84,7 @@ import java.util.Optional;
 
             // 유저정보에서 이름값을 가져와서 해당 유저의 권한과 함께 넣어 토큰을 만듬.
             String token = jwtUtil.createToken(user.getUsername(),user.getRole());
-            res.addCookie(new Cookie(JwtUtil.AUTHORIZATION_HEADER,token));
+//            res.addCookie(new Cookie(JwtUtil.AUTHORIZATION_HEADER,token));
             res.setHeader(JwtUtil.AUTHORIZATION_HEADER, token);
         }
 
