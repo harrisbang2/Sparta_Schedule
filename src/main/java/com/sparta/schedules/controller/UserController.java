@@ -41,11 +41,10 @@ public class UserController {
 
     @PostMapping("/user/signup")
     public String signup(@RequestBody SignupRequestDto requestDto) {
-
         userService.signup(requestDto);
-
         return "redirect:/api/user/login-page";
     }
+
     // 로그임
     @PostMapping("/user/login")
     public String login(LoginRequestDto requestDto, HttpServletResponse res){
