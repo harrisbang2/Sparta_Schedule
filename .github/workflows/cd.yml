@@ -1,0 +1,63 @@
+name: CD with Gradle
+
+# 언제 이 파일의 내용이 실행될 것인지 정의합니다.
+# 여기서는 main 브랜치에 코드가 push 되거나 pull_request되었을 때 실행할 것을 말하고 있습니다.
+on:
+  push:
+    branches: [ "master3" ]
+  pull_request:
+    branches: [ "master3" ]
+
+# 코드의 내용을 이 파일을 실행하여 action을 수행하는 주체(Github Actions에서 사용하는 VM)가 읽을 수 있도록 허용합니다.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: "adopt"
+
+
+      - name: Make application.properties
+        run: |
+          cd ./src/main/resources
+          touch ./application.properties
+          echo "${{ secrets.PROPERTIES }}" > ./application.properties
+
+        shell: bash
+      - name: Build with Gradle
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build -x test
+
+      # dockerfile을 통해 이미지를 빌드하고, 이를 docker repo로 push 합니다.
+      - name: Docker build & push to docker repo
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -f Dockerfile -t harrisbang/schedule:latest .
+#          docker push harrisbang/schedule
+#
+#      # appleboy/ssh-action@master
+#      # 실행 시, docker-compose를 사용합니다.
+#      - name: Deploy to server
+#        uses: appleboy/ssh-action@master
+#        id: deploy
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ec2-user
+#          key: ${{ secrets.KEY }}
+#          envs: GITHUB_SHA
+#
+#          script: |
+#            sudo docker rm -f $(docker ps -qa)
+#            sudo docker pull ${{ secrets.DOCKER_REPO }}/directors-dev
+#            docker-compose up -d
+#            docker image prune -f
