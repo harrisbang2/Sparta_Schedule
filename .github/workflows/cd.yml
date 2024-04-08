@@ -38,15 +38,15 @@ jobs:
           chmod +x ./gradlew
           ./gradlew clean build -x test
 
-      # dockerfile을 통해 이미지를 빌드하고, 이를 docker repo로 push 합니다.
+      # dockerfile 을 이미지를 빌드하고, 이를 docker repo 로 push
       - name: Docker build & push to docker repo
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t harrisbang/schedule:latest .
           docker push harrisbang/schedule
 
-      # appleboy/ssh-action@master
-      # 실행 시, docker-compose를 사용합니다.
+
+      # 실행 시, docker-compose를 사용.
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         id: deploy
@@ -57,8 +57,7 @@ jobs:
           envs: GITHUB_SHA
 
           script: |
-            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          
+            sudo docker rm -f $(docker ps -qa)
             sudo docker pull harrisbang/schedule
             docker-compose up -d
             docker image prune -f
