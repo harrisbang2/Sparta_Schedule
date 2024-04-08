@@ -2,10 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [ develop, feature/* ]
+    branches: [ master,master3,development, feature/* ]
   pull_request:
     branches:
       - development
+      - master3
+      - master
 
 jobs:
   ci:
