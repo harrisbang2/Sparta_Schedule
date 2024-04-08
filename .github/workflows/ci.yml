@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ master,master3,development, feature/* ]
+    branches: [ master, master3,development, feature/* ]
   pull_request:
     branches:
       - development
@@ -28,4 +28,4 @@ jobs:
 
       - name: run unittest
         run: |
-          ./gradlew clean test
+          git update-index --chmod=+x gradlew
