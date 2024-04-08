@@ -41,7 +41,7 @@ jobs:
       # dockerfile을 통해 이미지를 빌드하고, 이를 docker repo로 push 합니다.
       - name: Docker build & push to docker repo
         run: |
-          docker login -u harrisbang@naver.com -p Aa1213811!
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t harrisbang/schedule:latest .
           docker push harrisbang/schedule
 
@@ -51,9 +51,9 @@ jobs:
         uses: appleboy/ssh-action@master
         id: deploy
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.SSH_HOST }}
           username: ec2-user
-          key: ${{ secrets.KEY }}
+          key: ${{ secrets.SSH_KEY }}
           envs: GITHUB_SHA
 
           script: |
