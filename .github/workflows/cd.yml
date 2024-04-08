@@ -43,7 +43,7 @@ jobs:
         run: |
           docker login -u harrisbang@naver.com -p Aa1213811!
           docker build -f Dockerfile -t schedule:latest .
-          docker push schedule
+          docker push harrisbang/schedule
 
       # appleboy/ssh-action@master
       # 실행 시, docker-compose를 사용합니다.
