@@ -41,7 +41,7 @@ jobs:
       # dockerfile을 통해 이미지를 빌드하고, 이를 docker repo로 push 합니다.
       - name: Docker build & push to docker repo
         run: |
-          docker login -u harrisbang98@gmail.com -p Aa1213811!
+          docker login -u harrisbang@naver.com -p Aa1213811!
           docker build -f Dockerfile -t schedule:latest .
           docker push schedule
 
