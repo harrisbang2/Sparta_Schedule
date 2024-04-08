@@ -54,6 +54,6 @@ jobs:
 
           script: |
             sudo docker rm -f $(docker ps -qa)
-            sudo docker pull harrisbang/schedule
-            docker-compose up -d
+            sudo docker pull harrisbang/schedule:latest 
+            cd up -d
             docker image prune -f
