@@ -59,6 +59,6 @@ jobs:
           script: |
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           
-            sudo docker pull ${{ secrets.DOCKER_REPO }}
+            sudo docker pull harrisbang/schedule
             docker-compose up -d
             docker image prune -f
