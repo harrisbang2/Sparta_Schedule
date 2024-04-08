@@ -44,7 +44,7 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t harrisbang/schedule:schedule .
-          docker push harrisbang/schedule:schedule
+          docker push harrisbang/schedule
 
       # appleboy/ssh-action@master
       # 실행 시, docker-compose를 사용합니다.
