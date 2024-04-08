@@ -57,7 +57,8 @@ jobs:
           envs: GITHUB_SHA
 
           script: |
-            sudo docker rm -f $(docker ps -qa)
+            docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          
             sudo docker pull ${{ secrets.DOCKER_REPO }}
             docker-compose up -d
             docker image prune -f
