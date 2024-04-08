@@ -38,7 +38,7 @@ jobs:
 
       # gradle을 통해 소스를 빌드.
       - name: Build with Gradle
-        run: /
+        run: |
           chmod +x ./gradlew
           ./gradlew clean build -x test
 
