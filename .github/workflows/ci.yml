@@ -28,5 +28,4 @@ jobs:
 
 
       - name: run unittest
-        run: |
-          chmod=+x ./gradlew clean test
+        run: ./gradlew test
