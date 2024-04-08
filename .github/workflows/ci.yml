@@ -30,3 +30,4 @@ jobs:
       - name: run unittest
         run: |
           git update-index --chmod=+x gradlew
+          ./gradlew clean test
