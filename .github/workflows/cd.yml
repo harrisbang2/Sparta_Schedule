@@ -56,4 +56,5 @@ jobs:
             sudo docker rm -f $(docker ps -qa)
             sudo docker pull harrisbang/schedule:latest 
             docker image prune -f
+            docker run -d -p 8080:8080 --name schedule harrisbang/schedule
             
