@@ -1,0 +1,31 @@
+
+name: 'CI'
+
+on:
+push:
+
+branches: [ develop, feature/* ]
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  ci:
+    runs-on: [ ubuntu-latest ]
+
+
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: java setup
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+
+      - name: run unittest
+        run: |
+          ./gradlew clean test
