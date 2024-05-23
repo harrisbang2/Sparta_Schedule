@@ -1,9 +1,9 @@
 package com.sparta.schedules.controllertest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.schedules.config.WebSecurityConfig;
-import com.sparta.schedules.controller.UserController;
-import com.sparta.schedules.service.UserService;
+import com.sparta.schedules.global.config.WebSecurityConfig;
+import com.sparta.schedules.domain.user.controller.UserController;
+import com.sparta.schedules.domain.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

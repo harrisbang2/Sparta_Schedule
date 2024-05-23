@@ -1,20 +1,19 @@
 package com.sparta.schedules.servicetest;
 
-import com.sparta.schedules.dto.CommentRequestDto;
-import com.sparta.schedules.entity.Comment;
-import com.sparta.schedules.entity.Schedule;
-import com.sparta.schedules.entity.User;
-import com.sparta.schedules.entity.UserRoleEnum;
-import com.sparta.schedules.repository.CommentRepository;
-import com.sparta.schedules.repository.ScheduleRepository;
-import com.sparta.schedules.service.CommentService;
+import com.sparta.schedules.domain.comment.dto.CommentRequestDto;
+import com.sparta.schedules.domain.comment.entity.Comment;
+import com.sparta.schedules.domain.schedule.entity.Schedule;
+import com.sparta.schedules.domain.user.entity.User;
+import com.sparta.schedules.domain.user.entity.UserRoleEnum;
+import com.sparta.schedules.domain.comment.repository.CommentRepository;
+import com.sparta.schedules.domain.schedule.repository.ScheduleRepository;
+import com.sparta.schedules.domain.comment.service.CommentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.Optional;

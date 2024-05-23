@@ -41,9 +41,9 @@ jobs:
           docker build -f Dockerfile -t harrisbang/schedule:latest .
           docker push harrisbang/schedule
 
-
       # 실행 시, docker-compose를 사용.
       - name: Deploy to server
+
         uses: appleboy/ssh-action@master
         id: deploy
         with:

@@ -1,12 +1,12 @@
 package com.sparta.schedules.servicetest;
 
-import com.sparta.schedules.dto.ScheduleRequestDto;
-import com.sparta.schedules.dto.ScheduleResponseDto;
-import com.sparta.schedules.entity.Schedule;
-import com.sparta.schedules.entity.User;
-import com.sparta.schedules.entity.UserRoleEnum;
-import com.sparta.schedules.repository.ScheduleRepository;
-import com.sparta.schedules.service.ScheduleService;
+import com.sparta.schedules.domain.schedule.dto.ScheduleRequestDto;
+import com.sparta.schedules.domain.schedule.dto.ScheduleResponseDto;
+import com.sparta.schedules.domain.schedule.entity.Schedule;
+import com.sparta.schedules.domain.user.entity.User;
+import com.sparta.schedules.domain.user.entity.UserRoleEnum;
+import com.sparta.schedules.domain.schedule.repository.ScheduleRepository;
+import com.sparta.schedules.domain.schedule.service.ScheduleService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

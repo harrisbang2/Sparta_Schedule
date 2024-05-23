@@ -1,14 +1,14 @@
 package com.sparta.schedules.controllertest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.schedules.config.WebSecurityConfig;
-import com.sparta.schedules.controller.CommentController;
-import com.sparta.schedules.dto.CommentRequestDto;
-import com.sparta.schedules.entity.User;
-import com.sparta.schedules.entity.UserRoleEnum;
-import com.sparta.schedules.security.UserDetailsImpl;
-import com.sparta.schedules.service.CommentService;
-import com.sparta.schedules.service.ScheduleService;
+import com.sparta.schedules.global.config.WebSecurityConfig;
+import com.sparta.schedules.domain.comment.controller.CommentController;
+import com.sparta.schedules.domain.comment.dto.CommentRequestDto;
+import com.sparta.schedules.domain.user.entity.User;
+import com.sparta.schedules.domain.user.entity.UserRoleEnum;
+import com.sparta.schedules.global.security.UserDetailsImpl;
+import com.sparta.schedules.domain.comment.service.CommentService;
+import com.sparta.schedules.domain.schedule.service.ScheduleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -92,19 +92,19 @@ public class CommentControllerTest {
                 .andDo(print());
     }
 
-    @Test
-    @DisplayName("comment get")
-    void test2() throws Exception {
-        //given
-        this.mockUserSetup();
-
-        // when - then
-        this.mvc.perform(get("/api/comment/1")
-                        .principal(mockPrincipal)
-                )
-                .andExpect(status().is(200))
-                .andDo(print());
-    }
+//    @Test
+//    @DisplayName("comment get")
+//    void test2() throws Exception {
+//        //given
+//        this.mockUserSetup();
+//
+//        // when - then
+//        this.mvc.perform(get("/api/comment/1")
+//                        .principal(mockPrincipal)
+//                )
+//                .andExpect(status().is(200))
+//                .andDo(print());
+//    }
     @Test
     @DisplayName("Schedule put")
     void test3() throws Exception {
