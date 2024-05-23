@@ -5,25 +5,25 @@ import com.sparta.schedules.domain.comment.dto.CommentResponseDto;
 import com.sparta.schedules.domain.comment.entity.Comment;
 import com.sparta.schedules.domain.comment.repository.CommentRepository;
 import com.sparta.schedules.domain.schedule.entity.Schedule;
-import com.sparta.schedules.domain.user.entity.User;
 import com.sparta.schedules.domain.schedule.repository.ScheduleRepository;
+import com.sparta.schedules.domain.user.entity.User;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
-public class CommentService {
+public class CommentServiceImpl implements CommnentService{
     private final CommentRepository commentRepository;
     private final ScheduleRepository scheduleRepository;
 
-// 조회
+    // 조회
+    @Override
     public List<CommentResponseDto> getComments(Long id) {
         Schedule sc = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("그런 스케줄 없음"));
         return commentRepository.findAllBySchedule(sc);
     }
-
+    @Override
     public CommentResponseDto createComment(CommentRequestDto requestDto, User user) {
         /// 스케줄 확인.
         Schedule sc = scheduleRepository.findById(requestDto.getSchedule_id()).orElseThrow(() -> new IllegalArgumentException("그런 스케줄 없음"));
@@ -36,6 +36,8 @@ public class CommentService {
         res.setComment(savecomment.getComment());
         return res;
     }
+
+    @Override
     ///// 수정
     public Long updateComment(Long id, CommentRequestDto requestDto, User user) {
         // 해당 메모가 DB에 존재하는지 확인
@@ -52,6 +54,7 @@ public class CommentService {
         return id;
     }
 
+    @Override
     /// 삭제
     public Long deleteComment(Long id, User user) {
 
@@ -67,11 +70,10 @@ public class CommentService {
         }
         return id;
     }
-    //
+
     private Comment findSchedule(Long id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("그런 스케줄 없음"));
-        Comment comment = commentRepository.findBySchedule(schedule);
-        return comment;
+        return commentRepository.findBySchedule(schedule);
     }
 }
 

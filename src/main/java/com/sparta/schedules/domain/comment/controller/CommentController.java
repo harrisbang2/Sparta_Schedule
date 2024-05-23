@@ -2,7 +2,7 @@ package com.sparta.schedules.domain.comment.controller;
 
 import com.sparta.schedules.domain.comment.dto.CommentRequestDto;
 import com.sparta.schedules.domain.comment.dto.CommentResponseDto;
-import com.sparta.schedules.domain.comment.service.CommentService;
+import com.sparta.schedules.domain.comment.service.CommentServiceImpl;
 import com.sparta.schedules.global.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class CommentController {
-    private CommentService service;
+    private CommentServiceImpl service;
 
     @Autowired
-    public CommentController(CommentService service) {
+    public CommentController(CommentServiceImpl service) {
         this.service = service;
     }
 

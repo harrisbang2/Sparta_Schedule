@@ -1,10 +1,11 @@
 package com.sparta.schedules.domain.user.controller;
 
-import com.sparta.schedules.domain.user.service.UserService;
 import com.sparta.schedules.domain.user.dto.LoginRequestDto;
 import com.sparta.schedules.domain.user.dto.SignupRequestDto;
+import com.sparta.schedules.domain.user.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -15,12 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserServiceImpl userService;
 
     @GetMapping("/user/login-page")
     public String loginPage() {
@@ -31,7 +29,7 @@ public class UserController {
     public String signupPage() {
         return "signup";
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @PostMapping("/user/signup")
     public String signup(SignupRequestDto requestDto) {
         userService.signup(requestDto);
@@ -47,7 +45,7 @@ public class UserController {
         }
         return "redirect:/";
     }
-    //////////////////////
+
     // 로그아웃
     @GetMapping("/logout")
     public String fetchSignoutSite(HttpServletRequest request, HttpServletResponse response) {

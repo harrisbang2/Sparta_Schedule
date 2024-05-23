@@ -7,7 +7,7 @@ import com.sparta.schedules.domain.schedule.dto.ScheduleRequestDto;
 import com.sparta.schedules.domain.user.entity.User;
 import com.sparta.schedules.domain.user.entity.UserRoleEnum;
 import com.sparta.schedules.global.security.UserDetailsImpl;
-import com.sparta.schedules.domain.schedule.service.ScheduleService;
+import com.sparta.schedules.domain.schedule.service.ScheduleServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ public class ScheduleControllerTest {
     public MockMvc mvc;
     public Principal mockPrincipal;
     @MockBean
-    ScheduleService scheduleService;
+    ScheduleServiceImpl scheduleServiceImpl;
     @Autowired
     public WebApplicationContext context;
     @Autowired

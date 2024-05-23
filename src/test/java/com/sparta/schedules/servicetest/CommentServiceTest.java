@@ -7,7 +7,7 @@ import com.sparta.schedules.domain.user.entity.User;
 import com.sparta.schedules.domain.user.entity.UserRoleEnum;
 import com.sparta.schedules.domain.comment.repository.CommentRepository;
 import com.sparta.schedules.domain.schedule.repository.ScheduleRepository;
-import com.sparta.schedules.domain.comment.service.CommentService;
+import com.sparta.schedules.domain.comment.service.CommentServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -43,7 +43,7 @@ public class CommentServiceTest {
         User user = new User();
         user.setId(1L);
 
-        CommentService Services = new CommentService(MockCommentRepository,MockscheduleRepository);
+        CommentServiceImpl Services = new CommentServiceImpl(MockCommentRepository,MockscheduleRepository);
         //when
         boolean hasError = false;
         try{
@@ -74,13 +74,13 @@ public class CommentServiceTest {
 
         Comment comment = new Comment(requestDto,schedule,user);
 
-        CommentService commentService = new CommentService(MockCommentRepository,MockscheduleRepository);
+        CommentServiceImpl commentServiceImpl = new CommentServiceImpl(MockCommentRepository,MockscheduleRepository);
         //when
         given(MockscheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
         given(MockCommentRepository.findBySchedule(schedule)).willReturn(comment);
         //when(comment.getUser().getId().equals(any())).thenReturn(true);
 
-        Long l = commentService.updateComment(1L, requestDto, user);
+        Long l = commentServiceImpl.updateComment(1L, requestDto, user);
         //then
         assertEquals(1L,l);
     }
@@ -98,12 +98,12 @@ public class CommentServiceTest {
         schedule.setId(1L);
 
         Comment comment = new Comment(requestDto,schedule,user);
-        CommentService commentService = new CommentService(MockCommentRepository,MockscheduleRepository);
+        CommentServiceImpl commentServiceImpl = new CommentServiceImpl(MockCommentRepository,MockscheduleRepository);
         //when
         given(MockscheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
         given(MockCommentRepository.findBySchedule(schedule)).willReturn(comment);
 
-        Long l = commentService.deleteComment(1L, user);
+        Long l = commentServiceImpl.deleteComment(1L, user);
         //then
         assertEquals(1L,l);
     }

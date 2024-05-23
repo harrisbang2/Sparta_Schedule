@@ -2,7 +2,7 @@ package com.sparta.schedules.domain.schedule.controller;
 
 import com.sparta.schedules.domain.schedule.dto.ScheduleRequestDto;
 import com.sparta.schedules.domain.schedule.dto.ScheduleResponseDto;
-import com.sparta.schedules.domain.schedule.service.ScheduleService;
+import com.sparta.schedules.domain.schedule.service.ScheduleServiceImpl;
 import com.sparta.schedules.global.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class ScheduleController {
-    private ScheduleService service;
+    private ScheduleServiceImpl service;
 
     @Autowired
-    public ScheduleController(ScheduleService service) {
+    public ScheduleController(ScheduleServiceImpl service) {
         this.service = service;
     }
 

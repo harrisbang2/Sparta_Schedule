@@ -6,7 +6,7 @@ import com.sparta.schedules.domain.schedule.entity.Schedule;
 import com.sparta.schedules.domain.user.entity.User;
 import com.sparta.schedules.domain.user.entity.UserRoleEnum;
 import com.sparta.schedules.domain.schedule.repository.ScheduleRepository;
-import com.sparta.schedules.domain.schedule.service.ScheduleService;
+import com.sparta.schedules.domain.schedule.service.ScheduleServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -48,11 +48,11 @@ public class ScheduleServiceTest {
         schedule.setContents("init");
         schedule.setDate(LocalDate.now());
 
-        ScheduleService scheduleService = new ScheduleService(MockScheduleRepository);
+        ScheduleServiceImpl scheduleServiceImpl = new ScheduleServiceImpl(MockScheduleRepository);
         //when
 
         when(MockScheduleRepository.save(any())).thenReturn(schedule);
-        ScheduleResponseDto scheduleServicesSchedule= scheduleService.createSchedule(requestDto,user);
+        ScheduleResponseDto scheduleServicesSchedule= scheduleServiceImpl.createSchedule(requestDto,user);
         //then
         assertEquals(scheduleServicesSchedule.getContents(),schedule.getContents());
     }
@@ -65,10 +65,10 @@ public class ScheduleServiceTest {
         requestDto.setContents("테스트용 스케줄 변경 합니다");
         requestDto.setDate(LocalDate.now());
         Schedule schedule = new Schedule(requestDto,user);
-        ScheduleService scheduleService = new ScheduleService(MockScheduleRepository);
+        ScheduleServiceImpl scheduleServiceImpl = new ScheduleServiceImpl(MockScheduleRepository);
         //when
         given(MockScheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-        Long l = scheduleService.updateSchedule(1L, requestDto, user);
+        Long l = scheduleServiceImpl.updateSchedule(1L, requestDto, user);
         //then
         assertEquals(1L,l);
     }
@@ -80,10 +80,10 @@ public class ScheduleServiceTest {
         Schedule schedule = new Schedule();
         schedule.setId(1L);
         schedule.setUser(user);
-        ScheduleService scheduleService = new ScheduleService(MockScheduleRepository);
+        ScheduleServiceImpl scheduleServiceImpl = new ScheduleServiceImpl(MockScheduleRepository);
         //when
         given(MockScheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-        Long l = scheduleService.deleteSchedule(1L, user);
+        Long l = scheduleServiceImpl.deleteSchedule(1L, user);
         //then
         assertEquals(1L,l);
     }
