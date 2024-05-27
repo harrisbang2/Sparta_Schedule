@@ -6,7 +6,7 @@ import com.sparta.schedules.domain.schedule.entity.Schedule;
 import java.util.List;
 
 public interface CommentRepositoryCustom {
-    List<CommentResponseDto> findAllBySchedule(Schedule sc);
+    List<CommentResponseDto> findAllBySchedule(Long scId);
 
     Comment findBySchedule(Schedule schedule);
 }

@@ -20,8 +20,7 @@ public class CommentServiceImpl implements CommnentService{
     // 조회
     @Override
     public List<CommentResponseDto> getComments(Long id) {
-        Schedule sc = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("그런 스케줄 없음"));
-        return commentRepository.findAllBySchedule(sc);
+        return commentRepository.findAllBySchedule(id);
     }
     @Override
     public CommentResponseDto createComment(CommentRequestDto requestDto, User user) {
