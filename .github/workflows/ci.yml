@@ -6,9 +6,8 @@ on:
 
   pull_request:
     branches:
-      - development
-      - master3
-      - master
+      - main
+      - after
 
 jobs:
   ci:
