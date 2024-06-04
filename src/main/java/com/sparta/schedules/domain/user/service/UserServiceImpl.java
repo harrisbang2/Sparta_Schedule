@@ -29,15 +29,11 @@ public class UserServiceImpl implements UserService{
         String password = passwordEncoder.encode(requestDto.getPassword());
 
         // 회원 중복 확인
-        Optional<User> checkUsername = userRepository.findByUsername(username);
-        if (checkUsername.isPresent()) {
+        if (userRepository.existsByUsername(username)) {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
-
         // email 중복확인
-        String email = requestDto.getEmail();
-        Optional<User> checkEmail = userRepository.findByEmail(email);
-        if (checkEmail.isPresent()) {
+        if (userRepository.existsByEmail(requestDto.getEmail())) {
             throw new IllegalArgumentException("중복된 Email 입니다.");
         }
 
@@ -51,7 +47,7 @@ public class UserServiceImpl implements UserService{
         }
 
         // 사용자 등록
-        User user = new User(username, password, email, role);
+        User user = new User(username, password, requestDto.getEmail(), role);
         userRepository.save(user);
     }
 
