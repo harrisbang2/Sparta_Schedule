@@ -112,7 +112,7 @@ public class JwtUtil {
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals(AUTHORIZATION_HEADER)){
                     try{
-                        return URLDecoder.decode(cookie.getValue(),"UTF-8");
+                        return URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8);
                     }
                     catch (Exception e){
                         logger.error(e.getMessage());
