@@ -19,7 +19,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
         BooleanExpression predicate = user.username.eq(username);
 
         return Optional.ofNullable(jpaQueryFactory
-            .select(Projections.fields(User.class, user.username,user.password))
+            .select(Projections.fields(User.class, user.username,user.password,user.role))
             .from(user)
             .where(predicate)
             .fetchOne());

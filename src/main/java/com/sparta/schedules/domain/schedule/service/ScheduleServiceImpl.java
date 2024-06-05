@@ -37,23 +37,17 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public List<ScheduleResponseDto> getSchedule(User user) {
         // DB 조회
-        List<Schedule> sclist = ScRepository.findByUser(user);
-        List<ScheduleResponseDto> scr = new ArrayList<>();
-        for(Schedule sc : sclist){
-            scr.add(new ScheduleResponseDto(sc));
-        }
-        return scr;
+        return ScRepository.findByUser(user);
     }
 
     ////update
     @Override
     @Transactional
     public Long updateSchedule(Long id, ScheduleRequestDto requestDto, User user) {
-        //  DB에 존재하는지 확인
+
         Schedule sc = findMemo(id);
-        // 유저 확인.
+
         if(sc.getUser().getId().equals(user.getId())){
-            //  내용 수정
             sc.update(requestDto);
         }
         else {
@@ -82,18 +76,11 @@ public class ScheduleServiceImpl implements ScheduleService{
     // Find by ID + user
     @Override
     public ScheduleResponseDto searchMemo(Long id, User user) {
-        Schedule sc = ScRepository.findByIdAndUser(id,user);
-        ScheduleResponseDto scr = new ScheduleResponseDto(sc);
-        return scr;
+        return ScRepository.findByIdAndUser(id,user);
     }
     @Override
     public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
-        List<Schedule> sclist = ScRepository.findAllByDateAndUser(id,user);
-        List<ScheduleResponseDto> scr = new ArrayList<>();
-       for(Schedule sc : sclist){
-           scr.add(new ScheduleResponseDto(sc));
-       }
-        return scr;
+        return ScRepository.findAllByDateAndUser(id,user);
     }
 
     // Find by ID
