@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,7 +77,11 @@ public class ScheduleServiceImpl implements ScheduleService{
     // Find by ID + user
     @Override
     public ScheduleResponseDto searchMemo(Long id, User user) {
-        return ScRepository.findByIdAndUser(id,user);
+        try {
+            return ScRepository.findByIdAndUser(id,user);
+        } catch (Exception e) {
+            throw new NoSuchElementException(e);
+        }
     }
     @Override
     public List<ScheduleResponseDto> searchMemoDate(LocalDate id, User user) {
