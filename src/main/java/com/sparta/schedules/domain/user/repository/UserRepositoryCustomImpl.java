@@ -19,7 +19,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
         BooleanExpression predicate = user.username.eq(username);
 
         return Optional.ofNullable(jpaQueryFactory
-            .select(Projections.fields(User.class, user.username,user.password,user.role))
+            .select(Projections.fields(User.class, user.id,user.username,user.password,user.role))
             .from(user)
             .where(predicate)
             .fetchOne());
@@ -30,7 +30,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
         BooleanExpression predicate = user.username.eq(username).and(user.password.eq(password));
 
         return Optional.ofNullable(jpaQueryFactory
-            .select(Projections.fields(User.class, user.username,user.password))
+            .select(Projections.fields(User.class, user.id,user.username,user.password))
             .from(user)
             .where(predicate)
             .fetchOne());
