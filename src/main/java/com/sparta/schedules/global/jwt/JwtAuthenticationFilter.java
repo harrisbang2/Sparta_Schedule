@@ -4,6 +4,8 @@ package com.sparta.schedules.global.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.schedules.domain.user.dto.LoginRequestDto;
 import com.sparta.schedules.domain.user.entity.UserRoleEnum;
+import com.sparta.schedules.domain.user.repository.UserRepository;
+import com.sparta.schedules.domain.user.service.UserService;
 import com.sparta.schedules.global.security.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -48,8 +50,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.info("로그인 성공");
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
+        Long id = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getId();
 
-        String token = jwtUtil.createToken(username, role);
+        String token = jwtUtil.createToken(id, role);
         jwtUtil.addJwtToCookie(token, response);
     }
 

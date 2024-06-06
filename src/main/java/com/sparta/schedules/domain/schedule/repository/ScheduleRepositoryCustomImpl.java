@@ -20,7 +20,7 @@ public class ScheduleRepositoryCustomImpl implements ScheduleRepositoryCustom{
 
     @Override
     public List<ScheduleResponseDto> findAllByDateAndUser(LocalDate date, User user) {
-        BooleanExpression predicate = schedule.date.eq(date).and(schedule.user.username.eq(user.getUsername()));
+        BooleanExpression predicate = schedule.date.eq(date).and(schedule.user.id.eq(user.getId()));
 
         return jpaQueryFactory
             .select(Projections.fields(ScheduleResponseDto.class, schedule.contents,schedule.date))
@@ -31,7 +31,7 @@ public class ScheduleRepositoryCustomImpl implements ScheduleRepositoryCustom{
 
     @Override
     public ScheduleResponseDto findByIdAndUser(Long id, User user) {
-        BooleanExpression predicate = schedule.id.eq(id).and(schedule.user.username.eq(user.getUsername()));
+        BooleanExpression predicate = schedule.id.eq(id).and(schedule.user.id.eq(user.getId()));
 
         return jpaQueryFactory
             .select(Projections.fields(ScheduleResponseDto.class, schedule.contents,schedule.date))
@@ -42,7 +42,7 @@ public class ScheduleRepositoryCustomImpl implements ScheduleRepositoryCustom{
 
     @Override
     public List<ScheduleResponseDto> findByUser(User user) {
-        BooleanExpression predicate = schedule.user.username.eq(user.getUsername());
+        BooleanExpression predicate = schedule.user.id.eq(user.getId());
 
         return jpaQueryFactory
             .select(Projections.fields(ScheduleResponseDto.class, schedule.contents,schedule.date))

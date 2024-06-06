@@ -2,7 +2,6 @@ package com.sparta.schedules.domain.schedule.controller;
 
 import com.sparta.schedules.domain.schedule.dto.ScheduleRequestDto;
 import com.sparta.schedules.domain.schedule.dto.ScheduleResponseDto;
-import com.sparta.schedules.domain.schedule.service.ScheduleService;
 import com.sparta.schedules.domain.schedule.service.ScheduleServiceImpl;
 import com.sparta.schedules.global.security.UserDetailsImpl;
 import java.time.LocalDate;

@@ -8,7 +8,6 @@ import com.sparta.schedules.domain.user.repository.UserRepository;
 import com.sparta.schedules.global.exception.NoSuchUserException;
 import com.sparta.schedules.global.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -66,7 +65,7 @@ public class UserServiceImpl implements UserService{
         }
 
         // JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
-        String token = jwtUtil.createToken(user.getUsername(), user.getRole());
+        String token = jwtUtil.createToken(user.getId(), user.getRole());
         jwtUtil.addJwtToCookie(token, res);
     }
 }

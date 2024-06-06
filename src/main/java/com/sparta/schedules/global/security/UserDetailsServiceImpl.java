@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserDetails getUserDetailsFromJwt(String username) throws UsernameNotFoundException {
         User user = new User();
-        user.setUsername(username);
+        user.setId(Long.valueOf(username));
         user.setRole(UserRoleEnum.USER);
         return new UserDetailsImpl(user);
     }
