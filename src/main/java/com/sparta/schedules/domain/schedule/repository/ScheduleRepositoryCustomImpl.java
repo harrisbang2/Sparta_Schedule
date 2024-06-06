@@ -42,7 +42,7 @@ public class ScheduleRepositoryCustomImpl implements ScheduleRepositoryCustom{
 
     @Override
     public List<ScheduleResponseDto> findByUser(User user) {
-        BooleanExpression predicate = schedule.user.id.eq(user.getId());
+        BooleanExpression predicate = schedule.user.username.eq(user.getUsername());
 
         return jpaQueryFactory
             .select(Projections.fields(ScheduleResponseDto.class, schedule.contents,schedule.date))
