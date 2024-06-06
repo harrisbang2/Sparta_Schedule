@@ -2,9 +2,9 @@
 #
 #on:
 #  push:
-#    branches: [ "master3" ]
+#    branches: [ "after" ]
 #  pull_request:
-#    branches: [ "master" ]
+#    branches: [ "after" ]
 #
 #
 #permissions:

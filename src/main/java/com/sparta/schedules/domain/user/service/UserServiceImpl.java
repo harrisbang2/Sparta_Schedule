@@ -8,7 +8,6 @@ import com.sparta.schedules.domain.user.repository.UserRepository;
 import com.sparta.schedules.global.exception.NoSuchUserException;
 import com.sparta.schedules.global.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,15 +28,11 @@ public class UserServiceImpl implements UserService{
         String password = passwordEncoder.encode(requestDto.getPassword());
 
         // 회원 중복 확인
-        Optional<User> checkUsername = userRepository.findByUsername(username);
-        if (checkUsername.isPresent()) {
+        if (userRepository.existsByUsername(username)) {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
-
         // email 중복확인
-        String email = requestDto.getEmail();
-        Optional<User> checkEmail = userRepository.findByEmail(email);
-        if (checkEmail.isPresent()) {
+        if (userRepository.existsByEmail(requestDto.getEmail())) {
             throw new IllegalArgumentException("중복된 Email 입니다.");
         }
 
@@ -51,7 +46,7 @@ public class UserServiceImpl implements UserService{
         }
 
         // 사용자 등록
-        User user = new User(username, password, email, role);
+        User user = new User(username, password, requestDto.getEmail(), role);
         userRepository.save(user);
     }
 
@@ -70,7 +65,7 @@ public class UserServiceImpl implements UserService{
         }
 
         // JWT 생성 및 쿠키에 저장 후 Response 객체에 추가
-        String token = jwtUtil.createToken(user.getUsername(), user.getRole());
+        String token = jwtUtil.createToken(user.getId(), user.getRole());
         jwtUtil.addJwtToCookie(token, res);
     }
 }

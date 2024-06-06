@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@Table(name = "schedule")
+@Table(name = "schedule",indexes = {@Index(name = "id", columnList = "id")})
 @NoArgsConstructor
 public class Schedule {
     @Id

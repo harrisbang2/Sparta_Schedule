@@ -1,16 +1,10 @@
 package com.sparta.schedules.domain.schedule.repository;
 
 import com.sparta.schedules.domain.schedule.entity.Schedule;
-import com.sparta.schedules.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
-import java.util.List;
+@Repository
+public interface ScheduleRepository extends JpaRepository<Schedule,Long>,ScheduleRepositoryCustom {
 
-public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
-    List<Schedule> findAllByDateAndUser(LocalDate date, User user);
-
-    Schedule findByIdAndUser(Long id, User user);
-
-    List<Schedule> findByUser(User user);
 }

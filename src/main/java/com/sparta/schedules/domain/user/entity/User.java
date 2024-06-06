@@ -1,21 +1,29 @@
 package com.sparta.schedules.domain.user.entity;
 
-//import com.sparta.schedules.entity.UserRoleEnum;
 import com.sparta.schedules.domain.schedule.entity.Schedule;
 import com.sparta.schedules.domain.user.dto.SignupRequestDto;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "user", indexes = {@Index(name = "id",columnList = "id")})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
