@@ -1,8 +1,7 @@
 package com.sparta.schedules.domain.user.controller;
 
-import com.sparta.schedules.domain.user.dto.LoginRequestDto;
 import com.sparta.schedules.domain.user.dto.SignupRequestDto;
-import com.sparta.schedules.domain.user.service.UserServiceImpl;
+import com.sparta.schedules.domain.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @GetMapping("/user/login-page")
     public String loginPage() {
@@ -35,7 +34,7 @@ public class UserController {
         userService.signup(requestDto);
         return "redirect:/api/user/login-page";
     }
-    // 로그임
+    // 로그인
 //    @PostMapping("/user/login")
 //    public String login(LoginRequestDto requestDto, HttpServletResponse res){
 //        try {
