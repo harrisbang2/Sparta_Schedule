@@ -1,15 +1,12 @@
 package com.sparta.schedules.domain.schedule.service;
 
+import com.sparta.schedules.domain.schedule.dto.ScheduleRequestDto;
+import com.sparta.schedules.domain.schedule.dto.ScheduleResponseDto;
 import com.sparta.schedules.domain.schedule.entity.Schedule;
 import com.sparta.schedules.domain.schedule.repository.ScheduleRepository;
 import com.sparta.schedules.domain.user.entity.User;
-import com.sparta.schedules.domain.schedule.dto.ScheduleRequestDto;
-import com.sparta.schedules.domain.schedule.dto.ScheduleResponseDto;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
